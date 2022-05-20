@@ -34,7 +34,7 @@ public class Fila_ligada implements IFila_ligada {
 	public void setFim(Node fim) {
 		this.fim = fim;
 	}
-	
+
 	public int getTamanho() {
 		return tamanho;
 	}
@@ -80,13 +80,12 @@ public class Fila_ligada implements IFila_ligada {
 	public boolean isEmpty() {
 		return inicio == null;
 	}
-	
-	public void mostra() {
-		Node new_node = new Node();
-		new_node = inicio;
-		for (int i=1; i>=tamanho; i++) {
-			System.out.println("Indice " + i+1 + "- Elemento: " + new_node.getElemento());
-			new_node = new_node.getNext();
+
+	public void mostra(){
+		Node New_node = inicio;
+		for(int i = 1; i <= tamanho; i++) {
+			System.out.println("Indice " + i + ", Elemento: " + New_node.getElemento());
+			New_node = New_node.getNext();
 		}
 	}
 }

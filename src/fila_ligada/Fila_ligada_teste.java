@@ -8,10 +8,14 @@ public class Fila_ligada_teste {
 		
 		Fila_ligada f1 = new Fila_ligada();
 		
+		
 		f1.enqueue(1);
 		f1.enqueue(2);
-		System.out.println(f1.getTamanho());
 		f1.mostra();
+		System.out.println(f1.getTamanho());
+		System.out.println(f1.dequeue());
+		System.out.println(f1.dequeue());
+		f1.enqueue(5);
 		System.out.println(f1.dequeue());
 	}
 }

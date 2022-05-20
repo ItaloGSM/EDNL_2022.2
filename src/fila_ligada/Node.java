@@ -14,7 +14,7 @@ public class Node {
 	public Node() {
 		super();
 		this.next = null;
-		this.elemento = 0;
+		this.elemento = null;
 	}
 
 	public Node getNext() {
