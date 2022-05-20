@@ -34,6 +34,10 @@ public class Fila_ligada implements IFila_ligada {
 	public void setFim(Node fim) {
 		this.fim = fim;
 	}
+	
+	public int getTamanho() {
+		return tamanho;
+	}
 
 	// *************************** METODOS **************************
 
@@ -65,12 +69,6 @@ public class Fila_ligada implements IFila_ligada {
 		return inicio.getElemento();
 	}
 
-	/*
-	 * public int size() throws FilaVaziaException { if(isEmpty()) { throw new
-	 * FilaVaziaException("A Fila está vazia!"); } else { Node Current = inicio; int
-	 * aux = 1; while(Current.getNext() != null) { Current = Current.getNext();
-	 * aux++; } return aux; } }
-	 */
 	public int size() throws FilaVaziaException {
 		if (isEmpty()) {
 			throw new FilaVaziaException("A Fila está vazia!");
@@ -81,5 +79,14 @@ public class Fila_ligada implements IFila_ligada {
 
 	public boolean isEmpty() {
 		return inicio == null;
+	}
+	
+	public void mostra() {
+		Node new_node = new Node();
+		new_node = inicio;
+		for (int i=1; i>=tamanho; i++) {
+			System.out.println("Indice " + i+1 + "- Elemento: " + new_node.getElemento());
+			new_node = new_node.getNext();
+		}
 	}
 }

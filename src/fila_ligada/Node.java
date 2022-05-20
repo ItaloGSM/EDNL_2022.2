@@ -10,6 +10,12 @@ public class Node {
 		this.next = next;
 		this.elemento = elemento;
 	}
+	
+	public Node() {
+		super();
+		this.next = null;
+		this.elemento = 0;
+	}
 
 	public Node getNext() {
 		return next;
