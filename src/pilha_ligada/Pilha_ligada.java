@@ -15,7 +15,7 @@ public class Pilha_ligada implements IPilha{
 		this.current = null;
 		this.first = null;
 	}
-	
+
 	// ********************** GETTERS AND SETTERS **********************
 	
 	public int getTamanho() {
@@ -43,7 +43,7 @@ public class Pilha_ligada implements IPilha{
 	}
 
 
-	// *************************** CONSTRUTOR **************************
+	// *************************** METODOS **************************
 
 	public void push(Object o) {	
 		Node new_node = new Node(o, null);
