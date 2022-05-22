@@ -1,10 +1,8 @@
 package fila_ligada;
 
-import fila.FilaVaziaException;
-
 public class Fila_ligada_teste {
 
-	public static void main(String[] args) throws FilaVaziaException {
+	public static void main(String[] args) throws FilaVaziaException{
 		
 		Fila_ligada f1 = new Fila_ligada();
 		

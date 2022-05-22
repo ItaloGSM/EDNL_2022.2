@@ -1,7 +1,5 @@
 package fila_ligada;
 
-import fila.FilaVaziaException;
-
 public class Fila_ligada implements IFila_ligada {
 
 	private Node inicio;

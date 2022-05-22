@@ -1,7 +1,5 @@
 package fila_ligada;
 
-import fila.FilaVaziaException;
-
 public interface IFila_ligada {
 
 	public void enqueue(Object o);

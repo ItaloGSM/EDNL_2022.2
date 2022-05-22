@@ -89,8 +89,12 @@ public class Pilha_ligada implements IPilha{
 		return first == null;
 	}
 
-	public int size() {
-		return tamanho;
+	public int size() throws PilhaVaziaException {
+		if(isEmpty()) {
+			throw new PilhaVaziaException("A Pilha está vazia!");
+		} else {
+			return tamanho;
+		}
 	}
 	
 	public void mostra() {

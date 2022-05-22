@@ -7,6 +7,6 @@ public interface IPilha {
 	Object pop() throws PilhaVaziaException;
 	Object top() throws PilhaVaziaException;
 	boolean isEmpty();
-	int size();
+	int size() throws PilhaVaziaException;
 
 }
