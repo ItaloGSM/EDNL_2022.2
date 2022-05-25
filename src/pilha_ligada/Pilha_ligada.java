@@ -6,14 +6,14 @@ public class Pilha_ligada implements IPilha{
 
 	private int tamanho;
 	private Node current;
-	private Node first;
+	private Node novo;
 	
 	// *************************** CONSTRUTOR **************************
 
 	public Pilha_ligada() {
 		this.tamanho = 0;
 		this.current = null;
-		this.first = null;
+		this.novo = null;
 	}
 
 	// ********************** GETTERS AND SETTERS **********************
@@ -34,12 +34,12 @@ public class Pilha_ligada implements IPilha{
 		this.current = current;
 	}
 
-	public Node getFirst() {
-		return first;
+	public Node getNovo() {
+		return novo;
 	}
 
-	public void setFirst(Node first) {
-		this.first = first;
+	public void setNovo(Node novo) {
+		this.novo = novo;
 	}
 
 
@@ -48,12 +48,13 @@ public class Pilha_ligada implements IPilha{
 	public void push(Object o) {	
 		Node new_node = new Node(o, null);
 		if(isEmpty()) {
-			first = new_node;
-			current = first;
+			novo = new_node;
+			current = novo;
 			
 		} else {
-			current.setNext(new_node);
-			current = new_node;
+			novo = new_node;
+			novo.setNext(current);
+			current = novo;
 			
 		}
 		tamanho++;
@@ -63,17 +64,11 @@ public class Pilha_ligada implements IPilha{
 		if(isEmpty()) {
 			throw new PilhaVaziaException("A Pilha está vazia!");
 		} else {
-			Node new_node = first;
-			Node new_node2 = current;
-			for(int i=1; i<tamanho-1;i++) {
-				new_node = new_node.getNext();
-			}
+			Node new_node = current;
+			current = current.getNext();
+			novo = current;
 			tamanho--;
-			current = new_node;
-			current.setNext(null);
-			Object aux = new_node2.getElemento();
-			new_node2 = null;
-			return aux;
+			return new_node.getElemento();
 		}
 	}
 
@@ -86,19 +81,16 @@ public class Pilha_ligada implements IPilha{
 	}
 
 	public boolean isEmpty() {
-		return first == null;
+		return novo == null;
 	}
 
-	public int size() throws PilhaVaziaException {
-		if(isEmpty()) {
-			throw new PilhaVaziaException("A Pilha está vazia!");
-		} else {
-			return tamanho;
-		}
+	public int size() {
+
+		return tamanho;
 	}
 	
 	public void mostra() {
-		Node new_node = first;
+		Node new_node = novo;
 		for(int i=1; i<=tamanho;i++) {
 			System.out.println("Indice " + i + ", Elemento: " + new_node.getElemento());
 			new_node = new_node.getNext();

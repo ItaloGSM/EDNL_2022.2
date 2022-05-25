@@ -1,9 +1,12 @@
 package fila_pilha;
 import pilha.PilhaVaziaException;
+import pilha_ligada.Pilha_ligada;
 
 public class Fila_com_pilhas_teste {
 	public static void main(String[] args) throws PilhaVaziaException {
 		
+
+
 		Fila_com_pilhas f1 = new Fila_com_pilhas();
 
 		f1.enqueue(1);
@@ -41,7 +44,8 @@ public class Fila_com_pilhas_teste {
 		System.out.println(f1.dequeue());
 		System.out.println(f1.dequeue());
 		System.out.println(f1.dequeue());
-
+		System.out.println(f1.dequeue());
 		
-	}
+
+}
 }

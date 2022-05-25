@@ -39,6 +39,12 @@ public class Pilha_ligada_teste {
 		System.out.println("======================================");
 		p1.mostra();
 		System.out.println("======================================");
+		System.out.println("pop:" + p1.pop());
+		System.out.println("pop:" + p1.pop());
+		System.out.println("pop:" + p1.pop());
+		System.out.println("pop:" + p1.pop());
+
+		
 		
 	}
 }
