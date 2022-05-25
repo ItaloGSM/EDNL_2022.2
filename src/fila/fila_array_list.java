@@ -2,13 +2,13 @@ package fila;
 import java.util.ArrayList;
 
 
-public class fila_array_list implements IFila {
+public class Fila_array_list implements IFila {
 
 	private ArrayList<Object> a = new ArrayList<Object>();
 
 	// *************************** CONSTRUTOR **************************
 
-	public fila_array_list() {
+	public Fila_array_list() {
 		super();
 	}
 	

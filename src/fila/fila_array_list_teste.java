@@ -1,10 +1,11 @@
+
 package fila;
 
-public class fila_array_list_teste {
+public class Fila_array_list_teste {
 
 	public static void main(String[] args) throws FilaVaziaException {
 		
-		fila_array_list f1 = new fila_array_list();
+		Fila_array_list f1 = new Fila_array_list();
 		
 		
 		f1.enqueue(1);
