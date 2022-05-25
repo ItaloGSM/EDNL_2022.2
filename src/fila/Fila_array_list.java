@@ -21,7 +21,7 @@ public class Fila_array_list implements IFila {
 	
 	public Object dequeue() throws FilaVaziaException {
 		if (isEmpty()) {
-			throw new FilaVaziaException("A Fila est· vazia!");
+			throw new FilaVaziaException("A Fila est√° vazia!");
 		} else {
 			Object aux = a.get(0);
 			a.remove(0);
@@ -32,7 +32,7 @@ public class Fila_array_list implements IFila {
 	
 	public Object first() throws FilaVaziaException {
 		if (isEmpty()) {
-			throw new FilaVaziaException("A Fila est· vazia!");
+			throw new FilaVaziaException("A Fila est√° vazia!");
 		} else {
 			return a.get(0);
 		}
