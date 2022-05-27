@@ -8,9 +8,6 @@ public class Node_duplamente_encadeado {
 	
 	public Node_duplamente_encadeado() {
 		super();
-		this.elemento = null;
-		this.prev = null;
-		this.next = null;
 	}
 
 	public Node_duplamente_encadeado(Object elemento, Node_duplamente_encadeado prev, Node_duplamente_encadeado next) {
@@ -19,8 +16,6 @@ public class Node_duplamente_encadeado {
 		this.prev = prev;
 		this.next = next;
 	}
-
-
 
 	public Object getElemento() {
 		return elemento;
