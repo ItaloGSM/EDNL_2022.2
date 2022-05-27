@@ -85,7 +85,6 @@ public class Pilha_ligada implements IPilha{
 	}
 
 	public int size() {
-
 		return tamanho;
 	}
 	

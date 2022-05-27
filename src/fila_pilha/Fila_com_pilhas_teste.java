@@ -1,6 +1,5 @@
 package fila_pilha;
 import pilha.PilhaVaziaException;
-import pilha_ligada.Pilha_ligada;
 
 public class Fila_com_pilhas_teste {
 	public static void main(String[] args) throws PilhaVaziaException {
