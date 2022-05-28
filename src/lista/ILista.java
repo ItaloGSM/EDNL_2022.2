@@ -14,8 +14,8 @@ public interface ILista {
 	
 	void replaceElement(int index, Object o) throws ListaVaziaException;
 	void swapElement(int index1, int index2) throws ListaVaziaException;
-	void insertBefore(int index, Object o);
-	void insertAfter(int index, Object o);
+	void insertBefore(int index, Object o) throws ListaVaziaException;
+	void insertAfter(int index, Object o) throws ListaVaziaException;
 	void insertFirst(Object o);
 	void insertLast(Object o);
 	void remove(int index) throws ListaVaziaException;
