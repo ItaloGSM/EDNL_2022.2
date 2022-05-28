@@ -54,6 +54,9 @@ public class ListaArray implements ILista {
 	//*************************** METODOS **************************
 
 	public Object before(int index) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		if(isEmpty()) {
 			throw new ListaVaziaException("A Lista está vazia!");
 		}
@@ -61,6 +64,9 @@ public class ListaArray implements ILista {
 	}
 
 	public Object after(int index) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		if(isEmpty()) {
 			throw new ListaVaziaException("A Lista está vazia!");
 		}	
@@ -68,6 +74,9 @@ public class ListaArray implements ILista {
 	}
 
 	public void replaceElement(int index, Object o) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		if(isEmpty()) {
 			throw new ListaVaziaException("A Lista está vazia!");
 		}
@@ -75,6 +84,12 @@ public class ListaArray implements ILista {
 	}
 
 	public void swapElement(int index1, int index2) throws ListaVaziaException {
+		if(index1 < 0 || index1 > fim) {
+			throw new ListaVaziaException("Index1 invalido");
+		}
+		if(index2 < 0 || index2 > fim) {
+			throw new ListaVaziaException("Index2 invalido");
+		}
 		if(isEmpty()) {
 			throw new ListaVaziaException("A Lista está vazia!");
 		}
@@ -85,7 +100,10 @@ public class ListaArray implements ILista {
 		a[index2] = aux1;
 	}
 
-	public void insertBefore(int index, Object o) {
+	public void insertAfter(int index, Object o) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		if(size() == capacidade - 1) {
 			capacidade *= 2;
 			Object b[] = new Object[capacidade];
@@ -109,7 +127,10 @@ public class ListaArray implements ILista {
 	fim++;
 	}
 		
-	public void insertAfter(int index, Object o) {
+	public void insertBefore(int index, Object o) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		if(size() == capacidade - 1) {
 			capacidade *= 2;
 			Object b[] = new Object[capacidade];			
@@ -171,7 +192,10 @@ public class ListaArray implements ILista {
 
 	public void remove(int index) throws ListaVaziaException {
 		if(isEmpty()) {
-			throw new ListaVaziaException("O Vetor está vazio!");
+			throw new ListaVaziaException("A Lista está vazio!");
+		}
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
 		}
 		for(int i = index; i < size(); i++) {
 			a[i] = a[i+1];
@@ -179,11 +203,17 @@ public class ListaArray implements ILista {
 	fim--;
 	}
 
-	public boolean isFirst(int index) {
+	public boolean isFirst(int index) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		return index == inicio;
 	}
 
-	public boolean isLast(int index) {
+	public boolean isLast(int index) throws ListaVaziaException {
+		if(index < 0 || index > fim) {
+			throw new ListaVaziaException("Index invalido");
+		}
 		return index == fim;
 	}
 	
@@ -199,17 +229,23 @@ public class ListaArray implements ILista {
 		return fim == -1;
 	}
 
-	public Object first() {
+	public Object first() throws ListaVaziaException {
+		if(isEmpty()) {
+			throw new ListaVaziaException("A Lista está vazio!");
+		}
 		return a[inicio];
 	}
 
-	public Object last() {
+	public Object last() throws ListaVaziaException {
+		if(isEmpty()) {
+			throw new ListaVaziaException("A Lista está vazio!");
+		}
 		return a[fim];
 	}
 	
 	public void mostra() {
-		for(int i = 0; i < capacidade ; i++) {
-			System.out.println(a[i]);
+		for(int i = 0; i < size(); i++) {
+			System.out.println("Index: "+ i + " Elemento: " + a[i]);
 		}
 	}
 

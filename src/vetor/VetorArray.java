@@ -60,6 +60,9 @@ public class VetorArray implements IVetor{
 	//*************************** METODOS **************************
 
 	public Object elemAtRank(int index) throws VetorVazioException {
+		if(index < 0 || index > fim) {
+			throw new VetorVazioException("Rank invalido!");
+		}
 		if(isEmpty()) {
 			throw new VetorVazioException("O Vetor está vazio!");
 		}
@@ -67,6 +70,9 @@ public class VetorArray implements IVetor{
 	}
 
 	public Object replaceAtRank(int index, Object o) throws VetorVazioException {
+		if(index < 0 || index > fim) {
+			throw new VetorVazioException("Rank invalido!");
+		}
 		if(isEmpty()) {
 			throw new VetorVazioException("O Vetor está vazio!");
 		}
@@ -75,7 +81,10 @@ public class VetorArray implements IVetor{
 		return aux;
 	}
 
-	public void insertAtRank(int index, Object o){
+	public void insertAtRank(int index, Object o) throws VetorVazioException{
+		if(index < 0 || index > size()) {
+			throw new VetorVazioException("Rank invalido!");
+		}
 		if(size() == capacidade - 1) {
 			capacidade *= 2;
 			Object b[] = new Object[capacidade];
@@ -103,6 +112,9 @@ public class VetorArray implements IVetor{
 		if(isEmpty()) {
 			throw new VetorVazioException("O Vetor está vazio!");
 		}
+		if(index < 0 || index > fim) {
+			throw new VetorVazioException("Rank invalido!");
+		}
 		Object aux = a[index];
 		for(int i = index; i < size(); i++) {
 			a[i] = a[i+1];
@@ -125,7 +137,7 @@ public class VetorArray implements IVetor{
 	
 	public void mostra() {
 		for(int i = 0; i < size(); i++) {
-			System.out.println(a[i]);
+			System.out.println("Index: "+ i + " Elemento: " + a[i]);
 		}
 	}
 

@@ -1,10 +1,8 @@
-package lista;
+package sequencia;
 
-public class ListaArray_Teste {
-	
-	public static void main(String[] args) throws ListaVaziaException {
-		
-		ListaArray l1 = new ListaArray(1);
+public class SequenciaArray_teste {
+	public static void main(String[] args) throws SequenciaVaziaException {
+		SequenciaArray l1 = new SequenciaArray(1);
 		
 		l1.insertLast(1);
 		l1.insertLast(2);
@@ -17,10 +15,6 @@ public class ListaArray_Teste {
 		l1.insertLast(99);
 		l1.remove(2);
 		l1.mostra();
-		System.out.println("é o primeiro?" + l1.isFirst(0));
-		System.out.println("é o primeiro?" + l1.isFirst(1));
-		System.out.println("é o ultimo ?" + l1.isLast(5));
-		System.out.println("é o ultimo ?" + l1.isLast(4));
 		System.out.println("primeiro elemento: " + l1.first());
 		System.out.println("ultimo elemento: " + l1.last());
 		System.out.println("----------------------------------------------------");
@@ -33,7 +27,7 @@ public class ListaArray_Teste {
 		
 		System.out.println("----------------------------------------------------");
 		System.out.println("--------------------------L2--------------------------");
-		ListaArray l2 = new ListaArray(1);
+		SequenciaArray l2 = new SequenciaArray(1);
 		l2.insertLast(1);
 		l2.insertLast(2);
 		l2.insertLast(3);
@@ -50,7 +44,18 @@ public class ListaArray_Teste {
 		System.out.println("----------------------------------------------------");
 		l2.insertFirst(33);
 		l2.mostra();
+		System.out.println("ElementAtRank 3: " + l2.elemAtRank(3));
+		System.out.println("----------------------------------------------------");
+		System.out.println("ReplaceAtRank 3, " + "Old element: " +  l2.replaceAtRank(3, 1000));
+		l2.mostra();
+		System.out.println("----------------------------------------------------");
+		System.out.println("InsertAtRank 1: "); 
+		l2.insertAtRank(1, 999);
+		l2.mostra();
+		System.out.println("----------------------------------------------------");
+		System.out.println("RemoveAtRank 4: ");
+		l2.removeAtRank(4);
+		l2.mostra();
+		System.out.println("----------------------------------------------------");
 	}
 }
-
-
