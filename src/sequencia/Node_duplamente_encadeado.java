@@ -1,4 +1,4 @@
-package vetor;
+package sequencia;
 
 public class Node_duplamente_encadeado {
 	

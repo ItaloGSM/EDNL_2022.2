@@ -1,6 +1,8 @@
-package lista;
+package sequencia;
 
-public class Lista_duplamente_ligada implements ILista {
+import lista.Node_duplamente_encadeado;
+
+public class Sequencia_duplamente_encadeada implements ISequencia {
 
 	private Node_duplamente_encadeado SentinelInicio = new Node_duplamente_encadeado();
 	private Node_duplamente_encadeado SentinelFim = new Node_duplamente_encadeado();
@@ -8,7 +10,7 @@ public class Lista_duplamente_ligada implements ILista {
 
 	// *************************** CONSTRUTOR **************************
 
-	public Lista_duplamente_ligada() {
+	public Sequencia_duplamente_encadeada() {
 		super();
 		this.tamanho = 0;
 	}
@@ -41,26 +43,27 @@ public class Lista_duplamente_ligada implements ILista {
 
 	// ***************************** METODOS ****************************
 
-	public Object first() throws ListaVaziaException {
+	public Object first() throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		return SentinelInicio.getNext().getElemento();
 	}
 
-	public Object last() throws ListaVaziaException {
+	public Object last() throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		return SentinelFim.getPrev().getElemento();
+
 	}
 
-	public Object before(int index) throws ListaVaziaException {
+	public Object before(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		}
 		if (index <= (size() / 2)) {
 			Node_duplamente_encadeado aux = SentinelInicio;
@@ -77,12 +80,12 @@ public class Lista_duplamente_ligada implements ILista {
 		}
 	}
 
-	public Object after(int index) throws ListaVaziaException {
+	public Object after(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		}
 		if (index <= (size() / 2)) {
 			Node_duplamente_encadeado aux = SentinelInicio;
@@ -99,12 +102,12 @@ public class Lista_duplamente_ligada implements ILista {
 		}
 	}
 
-	public void replaceElement(int index, Object o) throws ListaVaziaException {
+	public void replaceElement(int index, Object o) throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		}
 		if (index <= (size() / 2)) {
 			Node_duplamente_encadeado aux = SentinelInicio;
@@ -120,16 +123,14 @@ public class Lista_duplamente_ligada implements ILista {
 			}
 			aux.setElemento(o);
 		}
-
 	}
 
-	public void swapElement(int index1, int index2) throws ListaVaziaException {
-
+	public void swapElement(int index1, int index2) throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
 		if (index1 > size() || index2 > size() || index1 < 0 || index2 < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		}
 		// FIND INDEX1
 		if (index1 <= (size() / 2)) {
@@ -191,9 +192,9 @@ public class Lista_duplamente_ligada implements ILista {
 		}
 	}
 
-	public void insertBefore(int index, Object o) throws ListaVaziaException {
+	public void insertBefore(int index, Object o) throws SequenciaVaziaException {
 		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		} else {
 			if (isEmpty()) {
 				Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
@@ -229,13 +230,13 @@ public class Lista_duplamente_ligada implements ILista {
 					new_node.setPrev(aux2);
 				}
 			}
-			tamanho++;
+		tamanho++;
 		}
 	}
 
-	public void insertAfter(int index, Object o) throws ListaVaziaException {
+	public void insertAfter(int index, Object o) throws SequenciaVaziaException {
 		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
+			throw new SequenciaVaziaException("Index inexistente!");
 		} else {
 			if (isEmpty()) {
 				Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
@@ -271,7 +272,7 @@ public class Lista_duplamente_ligada implements ILista {
 					new_node.setNext(aux2);
 				}
 			}
-			tamanho++;
+		tamanho++;
 		}
 	}
 
@@ -293,7 +294,7 @@ public class Lista_duplamente_ligada implements ILista {
 			new_node.setNext(aux);
 			new_node.setPrev(SentinelInicio);
 		}
-		tamanho++;
+	tamanho++;
 	}
 
 	public void insertLast(Object o) {
@@ -314,15 +315,15 @@ public class Lista_duplamente_ligada implements ILista {
 			new_node.setPrev(aux);
 			new_node.setNext(SentinelFim);
 		}
-		tamanho++;
+	tamanho++;
 	}
 
-	public void remove(int index) throws ListaVaziaException {
-		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente");
-		}
+	public void remove(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
-			throw new ListaVaziaException("Lista vazia!");
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
 		}
 		if (index <= (size() / 2)) {
 			Node_duplamente_encadeado aux = SentinelInicio;
@@ -344,6 +345,130 @@ public class Lista_duplamente_ligada implements ILista {
 		}
 	}
 
+	public Object elemAtRank(int index) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		}
+		if (index <= (size() / 2)) {
+			Node_duplamente_encadeado aux = SentinelInicio;
+			for (int i = 0; i <= index; i++) {
+				aux = aux.getNext();
+			}
+			return aux.getElemento();
+		} else {
+			Node_duplamente_encadeado aux = SentinelFim;
+			for (int i = size(); i > index; i--) {
+				aux = aux.getPrev();
+			}
+			return aux.getElemento();
+		}
+	}
+
+	public Object replaceAtRank(int index, Object o) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		}
+		if (index <= (size() / 2)) {
+			Node_duplamente_encadeado aux = SentinelInicio;
+			for (int i = 0; i <= index; i++) {
+				aux = aux.getNext();
+			}
+			Object aux2 = aux.getElemento();
+			aux.setElemento(o);
+			return aux2;
+		} else {
+			Node_duplamente_encadeado aux = SentinelFim;
+			for (int i = size(); i > index; i--) {
+				aux = aux.getPrev();
+			}
+			Object aux2 = aux.getElemento();
+			aux.setElemento(o);
+			return aux2;
+		}
+	}
+
+	public void insertAtRank(int index, Object o) throws SequenciaVaziaException {
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		} else {
+			if (isEmpty()) {
+				Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
+				new_node.setElemento(o);
+				SentinelInicio.setNext(new_node);
+				SentinelFim.setPrev(new_node);
+				new_node.setNext(SentinelFim);
+				new_node.setPrev(SentinelInicio);
+			} else {
+				if (index <= (size() / 2)) {
+					Node_duplamente_encadeado aux = SentinelInicio.getNext();
+					Node_duplamente_encadeado aux2 = SentinelInicio.getNext();
+					Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
+					new_node.setElemento(o);
+					for (int i = 1; i < index - 1; i++) {
+						aux = aux.getNext();
+						aux2 = aux2.getNext();
+					}
+					aux2 = aux2.getNext();
+					aux.setNext(new_node);
+					new_node.setPrev(aux);
+					aux2.setPrev(new_node);
+					new_node.setNext(aux2);
+				} else {
+					Node_duplamente_encadeado aux = SentinelFim;
+					Node_duplamente_encadeado aux2 = SentinelFim;
+					Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
+					new_node.setElemento(o);
+					for (int i = tamanho; i > index; i--) {
+						aux = aux.getPrev();
+						aux2 = aux2.getPrev();
+					}
+					aux2 = aux2.getPrev();
+					aux.setPrev(new_node);
+					new_node.setNext(aux);
+					aux2.setNext(new_node);
+					new_node.setPrev(aux2);
+				}
+			}
+		tamanho++;
+		}
+	}
+
+	public Object removeAtRank(int index) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		}
+		if (index <= (size() / 2)) {
+			Node_duplamente_encadeado aux = SentinelInicio;
+			for (int i = 0; i <= index; i++) {
+				aux = aux.getNext();
+			}
+			Object aux2 = aux.getElemento();
+			aux.getPrev().setNext(aux.getNext());
+			aux.getNext().setPrev(aux.getPrev());
+			tamanho--;
+			return aux2;
+		} else {
+			Node_duplamente_encadeado aux = SentinelFim;
+			for (int i = size(); i > index; i--) {
+				aux = aux.getPrev();
+			}
+			Object aux2 = aux.getElemento();
+			aux.getPrev().setNext(aux.getNext());
+			aux.getNext().setPrev(aux.getPrev());
+			tamanho--;
+			return aux2;
+		}
+	}
+
 	public int size() {
 		return tamanho;
 	}
@@ -351,27 +476,7 @@ public class Lista_duplamente_ligada implements ILista {
 	public boolean isEmpty() {
 		return tamanho == 0;
 	}
-
-	public boolean isFirst(int index) throws ListaVaziaException {
-		if (isEmpty()) {
-			throw new ListaVaziaException("A Lista está vazia!");
-		}
-		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente!");
-		}
-		return index == 0;
-	}
-
-	public boolean isLast(int index) throws ListaVaziaException {
-		if (isEmpty()) {
-			throw new ListaVaziaException("A Lista está vazia!");
-		}
-		if (index > size() || index < 0) {
-			throw new ListaVaziaException("Index inexistente!");
-		}
-		return index == tamanho - 1;
-	}
-
+	
 	public void mostra() {
 		Node_duplamente_encadeado aux = SentinelInicio.getNext();
 		for (int i = 0; i < tamanho; i++) {
