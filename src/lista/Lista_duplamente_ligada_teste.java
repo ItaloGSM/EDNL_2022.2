@@ -44,5 +44,14 @@ public class Lista_duplamente_ligada_teste {
 		System.out.println("SWAP ELEMENT: INDEX 5 <--> INDEX 9");
 		l1.mostra();
 		System.out.println("----------------------------------------------");
+		
+		Node_duplamente_encadeado no = l1.getSentinelInicio().getNext();
+		System.out.println("É o primeiro? " + l1.isFirst(no));
+		no = no.getNext();
+		System.out.println("É o primeiro? " + l1.isFirst(no));
+		no = l1.getSentinelFim().getPrev();
+		System.out.println("É o ultimo? " + l1.isLast(no));
+		no = no.getPrev();
+		System.out.println("É o ultimo? " + l1.isLast(no));
 	}
 }
