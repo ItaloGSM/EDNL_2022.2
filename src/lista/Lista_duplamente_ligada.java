@@ -55,12 +55,18 @@ public class Lista_duplamente_ligada implements ILista {
 		return SentinelFim.getPrev().getElemento();
 	}
 
-	public boolean isFirst (Node_duplamente_encadeado no) {
+	public boolean isFirst (Node_duplamente_encadeado no) throws ListaVaziaException {
+		if (isEmpty()) {
+			throw new ListaVaziaException("Lista vazia!");
+		}
 		Node_duplamente_encadeado aux = no;
 		return aux == SentinelInicio.getNext();
 	}
 	
-	public boolean isLast (Node_duplamente_encadeado no) {
+	public boolean isLast (Node_duplamente_encadeado no) throws ListaVaziaException {
+		if (isEmpty()) {
+			throw new ListaVaziaException("Lista vazia!");
+		}
 		Node_duplamente_encadeado aux = no;
 		return aux == SentinelFim.getPrev();
 	}

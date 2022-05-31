@@ -468,7 +468,13 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 		}
 	}
 	
-	public Node_duplamente_encadeado AtRank(int index) {
+	public Node_duplamente_encadeado AtRank(int index) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		}
 		Node_duplamente_encadeado aux;
 		if (index <= (size() / 2)) {
 			Node_duplamente_encadeado aux_inicio = SentinelInicio;
@@ -486,7 +492,10 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 	return aux;
 	}
 	
-	public int rankOf(Node_duplamente_encadeado no) {
+	public int rankOf(Node_duplamente_encadeado no) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
 		Node_duplamente_encadeado no_referencia = no;
 		Node_duplamente_encadeado aux = SentinelInicio.getNext();
 		int index = 0;
