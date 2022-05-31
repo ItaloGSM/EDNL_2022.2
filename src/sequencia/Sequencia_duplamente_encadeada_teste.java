@@ -49,7 +49,14 @@ public class Sequencia_duplamente_encadeada_teste {
 		s1.insertAtRank(1, 5555);
 		s1.mostra();
 		System.out.println("----------------------------------------------");
+		System.out.println("TESTE atRank()");
+		Node_duplamente_encadeado aux = s1.AtRank(5);
+		System.out.println("Elemento presente nó: " + aux.getElemento());
 		
+		System.out.println("----------------------------------------------");
+		System.out.println("TESTE rankOf()");
+		System.out.println("Indice do respectivo nó: " + s1.rankOf(aux));
+
 		
 	}
 }

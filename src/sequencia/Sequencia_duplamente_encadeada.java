@@ -1,6 +1,5 @@
 package sequencia;
 
-import lista.Node_duplamente_encadeado;
 
 public class Sequencia_duplamente_encadeada implements ISequencia {
 
@@ -468,7 +467,36 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 			return aux2;
 		}
 	}
-
+	
+	public Node_duplamente_encadeado AtRank(int index) {
+		Node_duplamente_encadeado aux;
+		if (index <= (size() / 2)) {
+			Node_duplamente_encadeado aux_inicio = SentinelInicio;
+			for (int i = 0; i <= index; i++) {
+				aux_inicio = aux_inicio.getNext();
+			}
+		aux = aux_inicio;
+		} else {
+			Node_duplamente_encadeado aux_fim = SentinelFim;
+			for (int i = size(); i > index; i--) {
+				aux_fim = aux_fim.getPrev();
+			}
+		aux = aux_fim;
+		}
+	return aux;
+	}
+	
+	public int rankOf(Node_duplamente_encadeado no) {
+		Node_duplamente_encadeado no_referencia = no;
+		Node_duplamente_encadeado aux = SentinelInicio.getNext();
+		int index = 0;
+		while(aux != no_referencia && aux != SentinelFim){
+			aux = aux.getNext();
+			index++;
+		}
+	return index;
+	
+	}
 	public int size() {
 		return tamanho;
 	}
