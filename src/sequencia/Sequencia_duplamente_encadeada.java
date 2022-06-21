@@ -504,8 +504,39 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 			index++;
 		}
 	return index;
+	}
+	
+	public void makeFirst(int index) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		if (index > size() || index < 0) {
+			throw new SequenciaVaziaException("Index inexistente!");
+		}
+		if (index <= (size() / 2)) {
+			Node_duplamente_encadeado aux = SentinelInicio;
+			for (int i = 0; i < index; i++) {
+				aux = aux.getNext();
+			}
+			aux.getPrev().setNext(aux.getNext());
+			aux.getNext().setPrev(aux.getPrev());
+			aux.setNext(SentinelInicio.getNext());
+			aux.setPrev(SentinelInicio);
+			SentinelInicio.setNext(aux);
+		} else {
+			Node_duplamente_encadeado aux = SentinelFim;
+			for (int i = size(); i > index; i--) {
+				aux = aux.getPrev();
+			}
+			aux.getPrev().setNext(aux.getNext());
+			aux.getNext().setPrev(aux.getPrev());
+			aux.setNext(SentinelInicio.getNext());
+			aux.setPrev(SentinelInicio);
+			SentinelInicio.setNext(aux);
+		}
 	
 	}
+	
 	public int size() {
 		return tamanho;
 	}

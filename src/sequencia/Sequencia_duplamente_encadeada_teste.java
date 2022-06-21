@@ -57,6 +57,7 @@ public class Sequencia_duplamente_encadeada_teste {
 		System.out.println("TESTE rankOf()");
 		System.out.println("Indice do respectivo nó: " + s1.rankOf(aux));
 
-		
+		s1.makeFirst(7);
+		s1.mostra();
 	}
 }
