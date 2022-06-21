@@ -50,21 +50,17 @@ public class Arvore_binaria {
 		
 	}
 	
-	public void contar(Node_binario no) {
-		tamanho++;
+	public int size(Node_binario no) {
+		int aux = 0;
 		if(no.getFilho_esquerda() != null) {
-			contar(no.getFilho_esquerda());
+			aux = aux + size(no.getFilho_esquerda());
 		}
 		if(no.getFilho_direita() != null) {
-			contar(no.getFilho_direita());
+			aux = aux + size(no.getFilho_direita());
 		}
+		return aux+1;
 	}
 	
-	public int size() {
-		int aux = tamanho;
-		tamanho = 0;
-		return aux;
-	}
 	
 	public int height() {
 		return 0;

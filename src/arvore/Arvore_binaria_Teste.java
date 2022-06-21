@@ -23,7 +23,7 @@ public class Arvore_binaria_Teste {
 		System.out.println("\nPOS-ORDER:");
 		arvore.posOrder(arvore.getRoot());
 		
-		arvore.contar(arvore.getRoot());
-		System.out.println("\nTAMANHO:" + arvore.size());
+		
+		System.out.println("\nTAMANHO:" + arvore.size(arvore.getRoot()));
 	}
 }
