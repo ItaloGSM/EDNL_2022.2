@@ -3,7 +3,6 @@ package arvore;
 public class Arvore_binaria {
 	
 	private Node_binario root;
-	private int tamanho = 0;
 	
 	
 	// *************************** CONSTRUTOR **************************
@@ -46,8 +45,7 @@ public class Arvore_binaria {
 			} else {
 				insert(o, no.getFilho_direita());
 			}
-		}
-		
+		}	
 	}
 	
 	public int size(Node_binario no) {
@@ -63,7 +61,17 @@ public class Arvore_binaria {
 	
 	
 	public int height() {
-		return 0;
+		if(isExternal(root)) {
+			return 0;
+		} else {
+			int h = 0;
+			if(height_node(root.getFilho_direita()) >= height_node(root.getFilho_esquerda())) {
+				h = h + height_node(root.getFilho_direita());
+			} else {
+				h = h + height_node(root.getFilho_esquerda());
+			}
+		return 1+h;
+		}
 	}
 
 	public int height_node(Node_binario no) {

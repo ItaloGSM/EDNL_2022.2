@@ -25,5 +25,7 @@ public class Arvore_binaria_Teste {
 		
 		
 		System.out.println("\nTAMANHO:" + arvore.size(arvore.getRoot()));
+		System.out.println("\nALTURA:" + arvore.height());
 	}
 }
+ 
