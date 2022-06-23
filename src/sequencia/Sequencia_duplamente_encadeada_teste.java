@@ -54,9 +54,12 @@ public class Sequencia_duplamente_encadeada_teste {
 		System.out.println("Elemento presente nó: " + aux.getElemento());
 		
 		System.out.println("----------------------------------------------");
-		System.out.println("TESTE rankOf()");
+		System.out.println("TESTE rankOf() - com while");
 		System.out.println("Indice do respectivo nó: " + s1.rankOf(aux));
-
+		System.out.println("TESTE rankOf2() - com for");
+		System.out.println("Indice do respectivo nó: " + s1.rankOf2(aux));
+		s1.mostra();
+		System.out.println("----------------------------------------------");
 		s1.makeFirst(7);
 		s1.mostra();
 	}

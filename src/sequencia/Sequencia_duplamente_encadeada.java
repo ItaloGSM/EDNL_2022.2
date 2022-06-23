@@ -492,14 +492,25 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 	return aux;
 	}
 	
+	public int rankOf2(Node_duplamente_encadeado no){
+		Node_duplamente_encadeado aux = SentinelInicio;
+		int index = 0;
+		for(int i = 0; i < size(); i++) {
+			aux = aux.getNext();
+			if(aux == no) {
+				index = i;
+			}
+		}
+	return index;
+	}
+	
 	public int rankOf(Node_duplamente_encadeado no) throws SequenciaVaziaException {
 		if (isEmpty()) {
 			throw new SequenciaVaziaException("Sequencia vazia!");
 		}
-		Node_duplamente_encadeado no_referencia = no;
 		Node_duplamente_encadeado aux = SentinelInicio.getNext();
 		int index = 0;
-		while(aux != no_referencia && aux != SentinelFim){
+		while(aux != no && aux != SentinelFim){
 			aux = aux.getNext();
 			index++;
 		}
