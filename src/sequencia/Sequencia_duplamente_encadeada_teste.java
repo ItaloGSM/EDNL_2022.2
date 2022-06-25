@@ -62,5 +62,27 @@ public class Sequencia_duplamente_encadeada_teste {
 		System.out.println("----------------------------------------------");
 		s1.makeFirst(7);
 		s1.mostra();
+		System.out.println("----------------------------------------------");
+		aux = s1.AtRank(2);
+		System.out.println("Before: " + s1.before(aux));
+		System.out.println("After: " + s1.after(aux));
+		s1.replaceElement(aux, 4444);
+		s1.mostra();
+		System.out.println("----------------------------------------------");
+		Node_duplamente_encadeado aux2 = s1.AtRank(9);
+		System.out.println("SWAP ELEMENTS " + aux.getElemento() + " <_--- > " + aux2.getElemento());
+		s1.swapElements(aux, aux2);
+		s1.mostra();
+		System.out.println("----------------------------------------------");
+		System.out.println("Insert before: ");
+		s1.insertBefore(aux, 7);
+		System.out.println("Insert after: ");
+		s1.insertAfter(aux, 7);
+		s1.mostra();
+		System.out.println("----------------------------------------------");
+		System.out.println("remove: ");
+		s1.remove(aux);
+		s1.mostra();
+		System.out.println("----------------------------------------------");
 	}
 }

@@ -1,6 +1,5 @@
 package sequencia;
 
-
 public class Sequencia_duplamente_encadeada implements ISequencia {
 
 	private Node_duplamente_encadeado SentinelInicio = new Node_duplamente_encadeado();
@@ -57,6 +56,58 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 
 	}
 
+	// ***************************** METODOS COM NÓ****************************
+	
+	public Object before(Node_duplamente_encadeado no) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		return no.getPrev().getElemento();
+	}
+	public Object after(Node_duplamente_encadeado no) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		return no.getNext().getElemento();
+	}
+	public void replaceElement(Node_duplamente_encadeado no, Object o) {
+		no.setElemento(o);
+	}
+	public void swapElements(Node_duplamente_encadeado no, Node_duplamente_encadeado no2) {
+		Object aux = no.getElemento();
+		no.setElemento(no2.getElemento());
+		no2.setElemento(aux);
+	}
+	public void insertBefore(Node_duplamente_encadeado no, Object o) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		Node_duplamente_encadeado aux = new Node_duplamente_encadeado(o,no.getPrev(),no);
+		no.getPrev().setNext(aux);
+		no.setPrev(aux);
+		tamanho++;
+	}
+	public void insertAfter(Node_duplamente_encadeado no, Object o) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		Node_duplamente_encadeado aux = new Node_duplamente_encadeado(o,no,no.getNext());
+		no.getNext().setPrev(aux);
+		no.setNext(aux);
+		tamanho++;
+	}
+	public void remove(Node_duplamente_encadeado no) throws SequenciaVaziaException {
+		if (isEmpty()) {
+			throw new SequenciaVaziaException("Sequencia vazia!");
+		}
+		no.getPrev().setNext(no.getNext());
+		no.getNext().setPrev(no.getPrev());
+		no = null;
+		tamanho--;
+	}
+	
+	// ***************************** METODOS COM INDEX****************************
+	
 	public Object before(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
 			throw new SequenciaVaziaException("Sequencia vazia!");
@@ -78,7 +129,7 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 			return aux.getPrev().getElemento();
 		}
 	}
-
+	
 	public Object after(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
 			throw new SequenciaVaziaException("Sequencia vazia!");
@@ -274,7 +325,7 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 		tamanho++;
 		}
 	}
-
+	
 	public void insertFirst(Object o) {
 		if (isEmpty()) {
 			Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
@@ -284,18 +335,13 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 			SentinelInicio.setNext(new_node);
 			SentinelFim.setPrev(new_node);
 		} else {
-			Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
-			new_node.setElemento(o);
-			Node_duplamente_encadeado aux = new Node_duplamente_encadeado();
-			aux = SentinelInicio.getNext();
-			aux.setPrev(new_node);
-			SentinelInicio.setNext(new_node);
-			new_node.setNext(aux);
-			new_node.setPrev(SentinelInicio);
+			Node_duplamente_encadeado aux = new Node_duplamente_encadeado(o,SentinelInicio,SentinelInicio.getNext());
+			SentinelInicio.getNext().setPrev(aux);
+			SentinelInicio.setNext(aux);
 		}
 	tamanho++;
 	}
-
+	
 	public void insertLast(Object o) {
 		if (isEmpty()) {
 			Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
@@ -305,17 +351,14 @@ public class Sequencia_duplamente_encadeada implements ISequencia {
 			SentinelInicio.setNext(new_node);
 			SentinelFim.setPrev(new_node);
 		} else {
-			Node_duplamente_encadeado new_node = new Node_duplamente_encadeado();
-			new_node.setElemento(o);
-			Node_duplamente_encadeado aux = new Node_duplamente_encadeado();
-			aux = SentinelFim.getPrev();
-			aux.setNext(new_node);
-			SentinelFim.setPrev(new_node);
-			new_node.setPrev(aux);
-			new_node.setNext(SentinelFim);
+			Node_duplamente_encadeado aux = new Node_duplamente_encadeado(o,SentinelFim.getPrev(),SentinelFim);
+			SentinelFim.getPrev().setNext(aux);
+			SentinelFim.setPrev(aux);
 		}
 	tamanho++;
 	}
+
+	
 
 	public void remove(int index) throws SequenciaVaziaException {
 		if (isEmpty()) {
