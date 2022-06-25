@@ -5,6 +5,8 @@ public class Sequencia_duplamente_encadeada_teste {
 	public static void main(String[] args) throws SequenciaVaziaException {
 		Sequencia_duplamente_encadeada s1 = new Sequencia_duplamente_encadeada();
 		
+		
+		// TESTE DOS METODOS COM INDEX
 		s1.insertFirst(1);
 		s1.insertFirst(99);
 		s1.insertLast(66);
@@ -60,10 +62,12 @@ public class Sequencia_duplamente_encadeada_teste {
 		System.out.println("Indice do respectivo nó: " + s1.rankOf2(aux));
 		s1.mostra();
 		System.out.println("----------------------------------------------");
+		// makefirst feito em sala
 		s1.makeFirst(7);
 		s1.mostra();
 		System.out.println("----------------------------------------------");
 		aux = s1.AtRank(2);
+		// TESTE DOS METODOS COM NÓ
 		System.out.println("Before: " + s1.before(aux));
 		System.out.println("After: " + s1.after(aux));
 		s1.replaceElement(aux, 4444);
