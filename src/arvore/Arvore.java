@@ -1,12 +1,10 @@
 package arvore;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Arvore implements IArvore{
 
-	
-	private Node root = new Node();
-	private int contador = 1;
+	private Node root;
 	
 	// *************************** CONSTRUTOR **************************
 
@@ -30,29 +28,26 @@ public class Arvore implements IArvore{
 	}
 
 	public int height() {
-		return 0;
+		return height_node(root);
 	}
 	
-	/*
 	public int height_node(Node x) {
-		ArrayList<Node> filhos = children(x);
+		List<Node> filhos = children(x);
 		if(isExternal(x)){
 			return 0;
 		} else {
 			int h = 0;
-			for(int i=0 ; i<filhos.size() ; i++) {
-				if (h <= height_node(filhos[i])) {
-					h = height_node(filhos[i]);
+			for(int i=0 ; i<filhos.size(); i++) {
+				if (h <= height_node(filhos.get(i))) {
+					h = height_node(filhos.get(i));
 				}
 			}
-		return h;
+		return 1+h;
 		}
 	}
-	*/
 
 	public boolean isEmpty() {
-		Node aux = root();
-		return aux.getElemento() == null && aux.getFilhos() == null;
+		return root == null;
 	}
 
 	public Node root() {
@@ -63,16 +58,16 @@ public class Arvore implements IArvore{
 		return x.getPai();
 	}
 
-	public ArrayList<Node> children(Node x) {
+	public List<Node> children(Node x) {
 		return x.getFilhos();
 	}
 	
 	public boolean isInternal(Node x) {
-		return x.getFilhos() != null;
+		return children(x).size() != 0;
 	}
 
 	public boolean isExternal(Node x) {
-		return x.getFilhos() == null;
+		return children(x).size() == 0;
 	}
 
 	public boolean isRoot(Node x) {
@@ -92,9 +87,18 @@ public class Arvore implements IArvore{
 		x.setElemento(o);
 		return aux;
 	}
-
-	public int height_node(Node x) {
-		return 0;
+	
+	public void preOrder(Node no) {
+		System.out.print(" " + no.getElemento() );
+		for(int i = 0; i < children(no).size() ; i++) {
+			preOrder(children(no).get(i));
+		}
 	}
-
+	
+	public void posOrder(Node no) {
+		for(int i = 0; i < children(no).size() ; i++) {
+			preOrder(children(no).get(i));
+		}
+		System.out.print(" " + no.getElemento() );
+	}
 }

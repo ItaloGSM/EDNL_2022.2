@@ -1,6 +1,7 @@
 package arvore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IArvore {
 
@@ -11,7 +12,7 @@ public interface IArvore {
 	
 	Node root();
 	Node parent(Node x);
-	ArrayList<Node> children(Node x);
+	List<Node> children(Node x);
 	
 	boolean isInternal(Node x);
 	boolean isExternal(Node x);
