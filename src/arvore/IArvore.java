@@ -1,6 +1,5 @@
 package arvore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IArvore {
