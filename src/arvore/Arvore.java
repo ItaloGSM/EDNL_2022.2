@@ -23,8 +23,29 @@ public class Arvore implements IArvore{
 	
 	// **************************** METODOS ****************************
 
+	public void insert(Node parent, Object o) {
+		if(parent == null) {
+			System.out.print(" " + o);
+			root = new Node();
+			root.setElemento(o);		
+		} else {
+			Node aux = new Node();
+			aux.setElemento(o);
+			aux.setPai(parent);
+			parent.getFilhos().add(aux);
+		}
+	}
+
 	public int size() {
-		return 0;
+		return contar(root);
+	}
+	
+	public int contar(Node no) {
+		int aux = 0;
+		for(int i = 0; i < children(no).size() ; i++) {
+			aux = aux + contar(children(no).get(i));
+		}
+	return 1+aux;
 	}
 
 	public int height() {
