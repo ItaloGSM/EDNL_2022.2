@@ -11,7 +11,7 @@ public class Node_binario {
 		
 	}
 	
-	public Node_binario(int elemento) {
+	public Node_binario(Object elemento) {
 		this.elemento = elemento;
 		this.filho_direita = null;
 		this.filho_esquerda = null;

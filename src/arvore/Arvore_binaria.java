@@ -2,7 +2,7 @@ package arvore;
 
 public class Arvore_binaria {
 	
-	private Node_binario root;
+	protected Node_binario root;
 	
 	
 	// *************************** CONSTRUTOR **************************
