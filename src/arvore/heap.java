@@ -2,7 +2,6 @@ package arvore;
 
 public class heap extends Arvore_binaria{
 	
-	
 	private Node_binario ultimo;
 
 	
@@ -34,15 +33,37 @@ public class heap extends Arvore_binaria{
 	public Object remove() {
 		Object aux = root.getElemento();
 		root.setElemento(ultimo.getElemento());
-		ultimo.setElemento(null);
+		atualizarUltimoRemove();
 		downheap(root);
 		return aux;
 	}
 	
-	public Node_binario atualizarUltimo() {
-		if(ultimo.getElemento() == null) {
+	
+	public Node_binario atualizarUltimoRemove(){
+		Node_binario aux = ultimo;
+		if(ultimo == ultimo.getPai().getFilho_direita()){
+			ultimo.getPai().setFilho_direita(null);
+			ultimo = ultimo.getPai().getFilho_esquerda();
+			return ultimo;
+		} else {
+			ultimo.getPai().setFilho_esquerda(null);
+			if(isRoot(ultimo.getPai())) {
+				ultimo = root;
+				return ultimo;
+			}
+			while(aux != aux.getPai().getFilho_direita()) {
+				aux = aux.getPai();
+			}
+			aux = aux.getPai().getFilho_esquerda();
+			while(aux.getFilho_direita() != null) {
+				aux = aux.getFilho_direita();
+			}
+			ultimo = aux;
 			return ultimo;
 		}
+	}
+	
+	public Node_binario atualizarUltimo() {
 		Node_binario aux = ultimo;
 		while(aux != aux.getPai().getFilho_esquerda() || aux != root) {
 			aux = aux.getPai();
@@ -116,17 +137,6 @@ public class heap extends Arvore_binaria{
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
