@@ -128,6 +128,30 @@ public class Arvore_binaria {
 		return aux;
 	}
 	
+	public Node_binario leftChild(Node_binario no) throws NodeException {
+		if(hasleft(no)) {
+			return no.getFilho_esquerda();
+		} else {
+			throw new NodeException("Não existe filho na esquerda!");
+		}
+	}
+	
+	public Node_binario rightChild(Node_binario no) throws NodeException {
+		if(hasRight(no)) {
+			return no.getFilho_direita();
+		} else {
+			throw new NodeException("Não existe filho na direita");
+		}
+	}
+	
+	public boolean hasleft(Node_binario no) {
+		return no.getFilho_esquerda() != null;
+	}
+	
+	public boolean hasRight(Node_binario no) {
+		return no.getFilho_direita() != null;
+	}
+	
 	// **************************** METODOS DE VARREDURA ****************************
 	
 	public void preOrder(Node_binario no) {
