@@ -24,15 +24,14 @@ public class Arvore implements IArvore{
 	// **************************** METODOS ****************************
 
 	public void insert(Node parent, Object o) {
-		if(parent == null) {
-			System.out.print(" " + o);
+		if(root == null) {
 			root = new Node();
 			root.setElemento(o);		
 		} else {
 			Node aux = new Node();
 			aux.setElemento(o);
 			aux.setPai(parent);
-			parent.getFilhos().add(aux);
+			children(parent).add(aux);
 		}
 	}
 
