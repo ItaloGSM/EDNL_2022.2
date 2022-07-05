@@ -1,18 +1,13 @@
 package arvore;
 
-public class Arvore_binaria {
+public class Arvore_binaria_de_teste {
 	
-	protected Node_binario root;
-	
-	
-	// *************************** CONSTRUTOR **************************
+	private Node_binario root;
 
-	public Arvore_binaria() {
-
+	public Arvore_binaria_de_teste() {
+		super();
 	}
 	
-	// ********************** GETTERS AND SETTERS **********************
-
 	public Node_binario getRoot() {
 		return root;
 	}
@@ -20,32 +15,84 @@ public class Arvore_binaria {
 	public void setRoot(Node_binario root) {
 		this.root = root;
 	}
-
-	// **************************** METODOS ****************************
-
-	public void insert ( int o, Node_binario no) {
-		if(no == null) {
-			System.out.print(" " + o);
-			root = new Node_binario(o);
-		} else if (o < (int)no.getElemento()){
-			if (no.getFilho_esquerda() ==  null) {
-				System.out.print(" " + o);
-				Node_binario aux = new Node_binario(o);
-				aux.setPai(no);
-				no.setFilho_esquerda(aux);
-			} else {
-				insert(o, no.getFilho_esquerda());
+	public void insert(Object elemento) {
+		if(isEmpty()){
+			root = new Node_binario(elemento);
+		}
+		Node_binario aux = find(elemento,root);
+		if((int)elemento == (int)aux.getElemento()) {
+			if(hasLeft(aux)){
+				Node_binario new_node = new Node_binario(elemento);
+				new_node.setPai(aux);
+				aux.setFilho_direita(new_node);
+			} else if(hasRight(aux)) {
+				Node_binario new_node = new Node_binario(elemento);
+				new_node.setPai(aux);
+				aux.setFilho_esquerda(new_node);
 			}
-		} else if (o > (int)no.getElemento()){
-			if (no.getFilho_direita() ==  null) {
-				System.out.print(" " + o);
-				Node_binario aux = new Node_binario(o);
-				aux.setPai(no);
-				no.setFilho_direita(aux);
-			} else {
-				insert(o, no.getFilho_direita());
+		} else if((int)elemento > (int)aux.getElemento()) {
+			Node_binario new_node = new Node_binario(elemento);
+			new_node.setPai(aux);
+			aux.setFilho_direita(new_node);
+		} else if((int)elemento < (int)aux.getElemento()) {
+			Node_binario new_node = new Node_binario(elemento);
+			new_node.setPai(aux);
+			aux.setFilho_esquerda(new_node);
+		}
+	}
+	
+	public void remove(Object elemento) throws NodeException {
+		Node_binario aux = find(elemento, root);
+		if(elemento != aux.getElemento()) {
+			throw new NodeException("O Node com a chave "+ elemento + "nao existe!");
+		} else {
+			if(isExternal(aux)) {
+				if(aux == aux.getPai().getFilho_esquerda()) {
+					aux.getPai().setFilho_esquerda(null);
+				} else {
+					aux.getPai().setFilho_direita(null);
+				}
+			}else if(aux.getFilho_direita() == null) {
+				if(aux == aux.getPai().getFilho_esquerda()) {
+					aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
+				} else {
+					aux.getPai().setFilho_direita(aux.getFilho_esquerda());
+				}
+			}else {
+				Node_binario aux2 = aux.getFilho_direita();
+				while(aux2.getFilho_esquerda() != null) {
+					aux2 = aux2.getFilho_esquerda();
+				}
+				aux.setElemento(aux2.getElemento());
+				aux2.getPai().setFilho_esquerda(null);
 			}
-		}	
+		}
+	}
+	
+	public Node_binario find (Object elemento, Node_binario no) {
+		
+		if(isExternal(no)){
+			return no;
+		}
+		if((int)elemento < (int)no.getElemento())
+		{
+			if(no.getFilho_esquerda() == null) {
+				return no;
+			}
+			return find(elemento, no.getFilho_esquerda());
+		} 
+		else if((int)elemento == (int)no.getElemento())
+		{
+			return no;
+		} 
+		else if((int)elemento > (int)no.getElemento())
+		{
+			if(no.getFilho_direita() == null) {
+				return no;
+			}
+			return find(elemento, no.getFilho_direita());
+		}
+	return null;
 	}
 	
 	public int size(Node_binario no) {
@@ -182,8 +229,5 @@ public class Arvore_binaria {
 			posOrder(no.getFilho_direita());
 		}
 		System.out.print(" " + no.getElemento() );
-
 	}
-
-
 }
