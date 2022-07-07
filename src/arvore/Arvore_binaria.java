@@ -1,5 +1,7 @@
 package arvore;
 
+import java.util.List;
+
 public class Arvore_binaria {
 	
 	protected Node_binario root;
@@ -61,17 +63,7 @@ public class Arvore_binaria {
 	
 	
 	public int height() {
-		if(isExternal(root)) {
-			return 0;
-		} else {
-			int h = 0;
-			if(height_node(root.getFilho_direita()) >= height_node(root.getFilho_esquerda())) {
-				h = h + height_node(root.getFilho_direita());
-			} else {
-				h = h + height_node(root.getFilho_esquerda());
-			}
-		return 1+h;
-		}
+		return height_node(root);
 	}
 
 	public int height_node(Node_binario no) {
@@ -89,7 +81,7 @@ public class Arvore_binaria {
 	}
 
 	public boolean isEmpty() {
-		return root.getElemento() == null && root.getFilho_direita() == null && root.getFilho_esquerda() == null;
+		return root == null;
 	}
 
 	public Node_binario root() {

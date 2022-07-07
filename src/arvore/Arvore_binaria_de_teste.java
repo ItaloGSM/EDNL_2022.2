@@ -43,8 +43,9 @@ public class Arvore_binaria_de_teste {
 	
 	public void remove(Object elemento) throws NodeException {
 		Node_binario aux = find(elemento, root);
+		int cont = 0;
 		if(elemento != aux.getElemento()) {
-			throw new NodeException("O Node com a chave "+ elemento + "nao existe!");
+			throw new NodeException("O Node com a chave "+ elemento + " nao existe!");
 		} else {
 			if(isExternal(aux)) {
 				if(aux == aux.getPai().getFilho_esquerda()) {
@@ -62,11 +63,24 @@ public class Arvore_binaria_de_teste {
 				Node_binario aux2 = aux.getFilho_direita();
 				while(aux2.getFilho_esquerda() != null) {
 					aux2 = aux2.getFilho_esquerda();
+					cont++;
 				}
 				aux.setElemento(aux2.getElemento());
-				aux2.getPai().setFilho_esquerda(null);
+				if(cont > 0) {
+					aux2.getPai().setFilho_esquerda(aux2.getFilho_direita());
+					if(aux2.getFilho_direita() != null) {
+						aux2.getFilho_direita().setPai(aux);
+					}
+				} else {
+					aux.setElemento(aux2.getElemento());
+					aux.setFilho_direita(aux2.getFilho_direita());
+					if(aux2.getFilho_direita() != null) {
+						aux2.getFilho_direita().setPai(aux);
+					}
+				}
 			}
 		}
+	System.out.println("Chave " + elemento + " removida com sucesso!");
 	}
 	
 	public Node_binario find (Object elemento, Node_binario no) {
@@ -108,17 +122,7 @@ public class Arvore_binaria_de_teste {
 	
 	
 	public int height() {
-		if(isExternal(root)) {
-			return 0;
-		} else {
-			int h = 0;
-			if(height_node(root.getFilho_direita()) >= height_node(root.getFilho_esquerda())) {
-				h = h + height_node(root.getFilho_direita());
-			} else {
-				h = h + height_node(root.getFilho_esquerda());
-			}
-		return 1+h;
-		}
+		return height_node(root);
 	}
 
 	public int height_node(Node_binario no) {
@@ -136,7 +140,7 @@ public class Arvore_binaria_de_teste {
 	}
 
 	public boolean isEmpty() {
-		return root.getElemento() == null && root.getFilho_direita() == null && root.getFilho_esquerda() == null;
+		return root == null;
 	}
 
 	public Node_binario root() {
