@@ -1,7 +1,5 @@
 package arvore;
 
-import java.util.List;
-
 public class Arvore_binaria {
 	
 	protected Node_binario root;
@@ -50,24 +48,27 @@ public class Arvore_binaria {
 		}	
 	}
 	
-	public int size(Node_binario no) {
+	public int size() {
+		return size_node(root);
+	}
+	
+	public int size_node(Node_binario no) {
 		int aux = 0;
 		if(no.getFilho_esquerda() != null) {
-			aux = aux + size(no.getFilho_esquerda());
+			aux = aux + size_node(no.getFilho_esquerda());
 		}
 		if(no.getFilho_direita() != null) {
-			aux = aux + size(no.getFilho_direita());
+			aux = aux + size_node(no.getFilho_direita());
 		}
 		return aux+1;
 	}
-	
 	
 	public int height() {
 		return height_node(root);
 	}
 
 	public int height_node(Node_binario no) {
-		if(isExternal(no)) {
+		if(no == null || isExternal(no)) {
 			return 0;
 		} else {
 			int h = 0;
@@ -111,7 +112,6 @@ public class Arvore_binaria {
 		} else {
 			return 1+depth(parent(no));
 		}
-		
 	}
 
 	public Object replace(Node_binario no, Object o) {
