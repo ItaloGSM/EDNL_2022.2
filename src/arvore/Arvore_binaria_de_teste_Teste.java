@@ -62,7 +62,8 @@ public class Arvore_binaria_de_teste_Teste {
 		a1.inOrder(a1.getRoot());
 		System.out.println("\nAltura da arvore: " + a1.height());
 		System.out.println("Tamanho da arvore: " + a1.size());
-
+		
+		a1.mostraArvore();
 
 
 

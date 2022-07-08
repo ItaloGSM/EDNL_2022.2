@@ -1,10 +1,12 @@
 package arvore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Arvore_binaria_de_teste {
 	
 	private Node_binario root;
+	private List <Node_binario> nos;
 
 	public Arvore_binaria_de_teste() {
 		super();
@@ -187,7 +189,7 @@ public class Arvore_binaria_de_teste {
 		if(hasLeft(no)) {
 			return no.getFilho_esquerda();
 		} else {
-			throw new NodeException("Não existe filho na esquerda!");
+			throw new NodeException("Nï¿½o existe filho na esquerda!");
 		}
 	}
 	
@@ -195,7 +197,7 @@ public class Arvore_binaria_de_teste {
 		if(hasRight(no)) {
 			return no.getFilho_direita();
 		} else {
-			throw new NodeException("Não existe filho na direita");
+			throw new NodeException("Nï¿½o existe filho na direita");
 		}
 	}
 	
@@ -237,5 +239,46 @@ public class Arvore_binaria_de_teste {
 			posOrder(no.getFilho_direita());
 		}
 		System.out.print(" " + no.getElemento() );
+	}
+	
+	// **************************** VISUALIZADOR ****************************
+	
+	public void mostraArvore() {
+		ArrayList<ArrayList<Object>> arvore = new ArrayList<ArrayList<Object>>(size());
+		atualizarTamanhoArray();
+		inOrderInsert(root);
+		for(int i=0 ; i<size() ; i++) {
+			ArrayList<Object> aux = new ArrayList<Object>(height());
+			arvore.add(i,aux);
+		}
+		
+		for(int i=0 ; i<size() ; i++) {
+			Node_binario aux = nos.get(i);
+			int profundidade = depth(aux);
+			ArrayList<Object> aux2 = arvore.get(i);
+			aux2.add(profundidade,aux.getElemento());
+		}
+		
+		for(int i = 0;i<height(); i++) {
+			for(int j=0;j<size();j++) {
+				System.out.print("[ " + arvore.get(j).get(i) + "]");
+			}
+		System.out.println();
+		}
+	}
+	
+	public void atualizarTamanhoArray() {
+		nos = new ArrayList<Node_binario>(size());
+	}
+	
+	public void inOrderInsert(Node_binario no) {
+		if(no.getFilho_esquerda() != null) {
+			inOrder(no.getFilho_esquerda());
+		}
+		nos.add(no);
+		if(no.getFilho_direita() != null) {
+			inOrder(no.getFilho_direita());
+		}
+
 	}
 }
