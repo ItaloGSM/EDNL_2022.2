@@ -1,9 +1,9 @@
 package arvore;
 
-public class Arvore_binaria_de_teste_Teste {
+public class Arvore_binaria_de_pesquisa_Teste {
 
 	public static void main(String[] args) throws NodeException {
-		Arvore_binaria_de_teste a1 = new Arvore_binaria_de_teste();
+		Arvore_binaria_de_pesquisa a1 = new Arvore_binaria_de_pesquisa();
 		a1.insert(5);
 		a1.insert(2);
 		a1.insert(3);
@@ -12,9 +12,10 @@ public class Arvore_binaria_de_teste_Teste {
 		a1.insert(8);
 		a1.insert(1);
 		a1.insert(9);
-		
+		a1.mostraArvore();
+		System.out.println(a1.depth(a1.getRoot().getFilho_direita()));
 		Node_binario root_aux = a1.getRoot();
-		System.out.println("Root" + root_aux.getElemento());
+		System.out.println("Root: " + root_aux.getElemento());
 		root_aux = root_aux.getFilho_esquerda();
 		System.out.println("Filho esquerda de root: " + root_aux.getElemento());
 		root_aux = root_aux.getFilho_direita();
@@ -62,7 +63,8 @@ public class Arvore_binaria_de_teste_Teste {
 		a1.inOrder(a1.getRoot());
 		System.out.println("\nAltura da arvore: " + a1.height());
 		System.out.println("Tamanho da arvore: " + a1.size());
-		
+		System.out.println(a1.depth(a1.getRoot().getFilho_esquerda()));
+		System.out.println(a1.getRoot().getFilho_direita().getFilho_direita().getFilho_direita().getFilho_esquerda().getElemento());
 		a1.mostraArvore();
 
 

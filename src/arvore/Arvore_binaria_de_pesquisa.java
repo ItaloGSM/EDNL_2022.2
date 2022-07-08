@@ -3,15 +3,24 @@ package arvore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Arvore_binaria_de_teste {
+public class Arvore_binaria_de_pesquisa {
 	
 	private Node_binario root;
-	private List <Node_binario> nos;
+	private List<Node_binario> nos = new ArrayList<Node_binario>();
 
-	public Arvore_binaria_de_teste() {
+
+	public Arvore_binaria_de_pesquisa() {
 		super();
 	}
-	
+
+	public List<Node_binario> getNos() {
+		return nos;
+	}
+
+	public void setNos(List<Node_binario> nos) {
+		this.nos = nos;
+	}
+
 	public Node_binario getRoot() {
 		return root;
 	}
@@ -19,6 +28,7 @@ public class Arvore_binaria_de_teste {
 	public void setRoot(Node_binario root) {
 		this.root = root;
 	}
+	
 	public void insert(Object elemento) {
 		if(isEmpty()){
 			root = new Node_binario(elemento);
@@ -54,14 +64,18 @@ public class Arvore_binaria_de_teste {
 			if(isExternal(aux)) {
 				if(aux == aux.getPai().getFilho_esquerda()) {
 					aux.getPai().setFilho_esquerda(null);
+					aux.setPai(null);
 				} else {
 					aux.getPai().setFilho_direita(null);
+					aux.setPai(null);
 				}
 			}else if(aux.getFilho_direita() == null) {
 				if(aux == aux.getPai().getFilho_esquerda()) {
 					aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
+					aux.getFilho_esquerda().setPai(aux.getPai());
 				} else {
 					aux.getPai().setFilho_direita(aux.getFilho_esquerda());
+					aux.getFilho_esquerda().setPai(aux.getPai());
 				}
 			}else {
 				Node_binario aux2 = aux.getFilho_direita();
@@ -244,41 +258,28 @@ public class Arvore_binaria_de_teste {
 	// **************************** VISUALIZADOR ****************************
 	
 	public void mostraArvore() {
-		ArrayList<ArrayList<Object>> arvore = new ArrayList<ArrayList<Object>>(size());
-		atualizarTamanhoArray();
-		inOrderInsert(root);
-		for(int i=0 ; i<size() ; i++) {
-			ArrayList<Object> aux = new ArrayList<Object>(height());
-			arvore.add(i,aux);
-		}
-		
-		for(int i=0 ; i<size() ; i++) {
-			Node_binario aux = nos.get(i);
-			int profundidade = depth(aux);
-			ArrayList<Object> aux2 = arvore.get(i);
-			aux2.add(profundidade,aux.getElemento());
-		}
-		
-		for(int i = 0;i<height(); i++) {
-			for(int j=0;j<size();j++) {
-				System.out.print("[ " + arvore.get(j).get(i) + "]");
+		organizador(root);
+		System.out.println("ARVORE BINARIA DE PESQUISA:");
+		for(int j=0; j<=height(); j++) {
+			for(int i = 0; i<size();i++) {
+				if(depth(nos.get(i)) == j) {
+					System.out.print("[" + nos.get(i).getElemento() + "]");
+				} else {
+					System.out.print("[ " + "]");
+				}	
 			}
 		System.out.println();
 		}
 	}
 	
-	public void atualizarTamanhoArray() {
-		nos = new ArrayList<Node_binario>(size());
-	}
-	
-	public void inOrderInsert(Node_binario no) {
+	public void organizador(Node_binario no) {
 		if(no.getFilho_esquerda() != null) {
-			inOrder(no.getFilho_esquerda());
+			organizador(no.getFilho_esquerda());
 		}
 		nos.add(no);
 		if(no.getFilho_direita() != null) {
-			inOrder(no.getFilho_direita());
+			organizador(no.getFilho_direita());
 		}
-
 	}
+	
 }
