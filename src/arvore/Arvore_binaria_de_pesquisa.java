@@ -270,6 +270,7 @@ public class Arvore_binaria_de_pesquisa {
 			}
 		System.out.println();
 		}
+	nos.clear();
 	}
 	
 	public void organizador(Node_binario no) {

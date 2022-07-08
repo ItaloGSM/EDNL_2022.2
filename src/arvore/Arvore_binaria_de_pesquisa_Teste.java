@@ -1,5 +1,7 @@
 package arvore;
 
+import java.util.List;
+
 public class Arvore_binaria_de_pesquisa_Teste {
 
 	public static void main(String[] args) throws NodeException {
@@ -65,6 +67,8 @@ public class Arvore_binaria_de_pesquisa_Teste {
 		System.out.println("Tamanho da arvore: " + a1.size());
 		System.out.println(a1.depth(a1.getRoot().getFilho_esquerda()));
 		System.out.println(a1.getRoot().getFilho_direita().getFilho_direita().getFilho_direita().getFilho_esquerda().getElemento());
+		a1.inOrder(a1.getRoot());
+		System.out.println();
 		a1.mostraArvore();
 
 
