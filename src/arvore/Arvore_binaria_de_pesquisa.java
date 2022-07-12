@@ -32,26 +32,27 @@ public class Arvore_binaria_de_pesquisa {
 	public void insert(Object elemento) {
 		if(isEmpty()){
 			root = new Node_binario(elemento);
-		}
-		Node_binario aux = find(elemento,root);
-		if((int)elemento == (int)aux.getElemento()) {
-			if(hasLeft(aux)){
-				Node_binario new_node = new Node_binario(elemento);
-				new_node.setPai(aux);
-				aux.setFilho_direita(new_node);
-			} else if(hasRight(aux)) {
+		} else {
+			Node_binario aux = find(elemento,root);
+			if((int)elemento == (int)aux.getElemento()) {
+				if(hasLeft(aux)){
+					Node_binario new_node = new Node_binario(elemento);
+					new_node.setPai(aux);
+					aux.setFilho_direita(new_node);
+				} else {
+					Node_binario new_node = new Node_binario(elemento);
+					new_node.setPai(aux);
+					aux.setFilho_esquerda(new_node);
+				}
+			} else if((int)elemento < (int)aux.getElemento()) {
 				Node_binario new_node = new Node_binario(elemento);
 				new_node.setPai(aux);
 				aux.setFilho_esquerda(new_node);
+			} else if((int)elemento > (int)aux.getElemento()) {
+				Node_binario new_node = new Node_binario(elemento);
+				new_node.setPai(aux);
+				aux.setFilho_direita(new_node);
 			}
-		} else if((int)elemento > (int)aux.getElemento()) {
-			Node_binario new_node = new Node_binario(elemento);
-			new_node.setPai(aux);
-			aux.setFilho_direita(new_node);
-		} else if((int)elemento < (int)aux.getElemento()) {
-			Node_binario new_node = new Node_binario(elemento);
-			new_node.setPai(aux);
-			aux.setFilho_esquerda(new_node);
 		}
 	}
 	
@@ -114,7 +115,10 @@ public class Arvore_binaria_de_pesquisa {
 			return find(elemento, no.getFilho_esquerda());
 		} 
 		else if((int)elemento == (int)no.getElemento())
-		{
+		{ 
+			if(hasLeft(no) && hasRight(no) && no.getFilho_esquerda().getElemento() == elemento) {
+				return find(elemento, no.getFilho_esquerda());
+			}
 			return no;
 		} 
 		else if((int)elemento > (int)no.getElemento())
