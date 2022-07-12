@@ -42,7 +42,4 @@ public class Node_binario {
 	public void setFilho_esquerda(Node_binario filho_esquerda) {
 		this.filho_esquerda = filho_esquerda;
 	}
-	
-	
-	
 }

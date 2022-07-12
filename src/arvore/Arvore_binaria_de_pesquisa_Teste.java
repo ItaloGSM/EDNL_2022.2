@@ -1,6 +1,5 @@
 package arvore;
 
-import java.util.List;
 
 public class Arvore_binaria_de_pesquisa_Teste {
 
@@ -70,19 +69,5 @@ public class Arvore_binaria_de_pesquisa_Teste {
 		a1.inOrder(a1.getRoot());
 		System.out.println();
 		a1.mostraArvore();
-
-
-
-		
-
-
-		
-
-
-
-
-		
-
-
 	}
 }

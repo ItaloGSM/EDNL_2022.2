@@ -203,7 +203,7 @@ public class Arvore_binaria_de_pesquisa {
 		if(hasLeft(no)) {
 			return no.getFilho_esquerda();
 		} else {
-			throw new NodeException("Nï¿½o existe filho na esquerda!");
+			throw new NodeException("Não existe filho na esquerda!");
 		}
 	}
 	
@@ -211,7 +211,7 @@ public class Arvore_binaria_de_pesquisa {
 		if(hasRight(no)) {
 			return no.getFilho_direita();
 		} else {
-			throw new NodeException("Nï¿½o existe filho na direita");
+			throw new NodeException("Não existe filho na direita");
 		}
 	}
 	
