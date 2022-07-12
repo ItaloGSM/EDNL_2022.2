@@ -1,6 +1,5 @@
 package arvore;
 
-import java.util.List;
 
 public class Arvore_binaria_de_pesquisa_Teste {
 
