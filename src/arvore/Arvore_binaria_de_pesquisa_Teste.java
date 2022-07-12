@@ -68,6 +68,8 @@ public class Arvore_binaria_de_pesquisa_Teste {
 		System.out.println(a1.getRoot().getFilho_direita().getFilho_direita().getFilho_direita().getFilho_esquerda().getElemento());
 		a1.inOrder(a1.getRoot());
 		System.out.println();
+		a1.insert(4);
+		a1.insert(6);
 		a1.mostraArvore();
 	}
 }

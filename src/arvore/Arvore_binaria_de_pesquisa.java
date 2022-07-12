@@ -29,20 +29,26 @@ public class Arvore_binaria_de_pesquisa {
 		this.root = root;
 	}
 	
-	public void insert(Object elemento) {
+	public void insert(Object elemento) throws NodeException {
 		if(isEmpty()){
 			root = new Node_binario(elemento);
 		} else {
 			Node_binario aux = find(elemento,root);
 			if((int)elemento == (int)aux.getElemento()) {
-				if(hasLeft(aux)){
-					Node_binario new_node = new Node_binario(elemento);
-					new_node.setPai(aux);
-					aux.setFilho_direita(new_node);
-				} else {
+				if(hasLeft(aux) == false && hasRight(aux) == false){
 					Node_binario new_node = new Node_binario(elemento);
 					new_node.setPai(aux);
 					aux.setFilho_esquerda(new_node);
+				} else if(hasLeft(aux) && hasRight(aux) == false){
+					Node_binario new_node = new Node_binario(elemento);
+					new_node.setPai(aux);
+					aux.setFilho_direita(new_node);
+				} else if(hasLeft(aux) == false && hasRight(aux)){
+					Node_binario new_node = new Node_binario(elemento);
+					new_node.setPai(aux);
+					aux.setFilho_esquerda(new_node);
+				} else {
+					throw new NodeException("Não há mais espaço para repetição!!");
 				}
 			} else if((int)elemento < (int)aux.getElemento()) {
 				Node_binario new_node = new Node_binario(elemento);
@@ -117,6 +123,9 @@ public class Arvore_binaria_de_pesquisa {
 		else if((int)elemento == (int)no.getElemento())
 		{ 
 			if(hasLeft(no) && hasRight(no) && no.getFilho_esquerda().getElemento() == elemento) {
+				return find(elemento, no.getFilho_esquerda());
+			}
+			if(hasLeft(no) && hasRight(no) && no.getFilho_direita().getElemento() == elemento) {
 				return find(elemento, no.getFilho_esquerda());
 			}
 			return no;
