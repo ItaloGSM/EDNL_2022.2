@@ -48,7 +48,7 @@ public class Arvore_binaria_de_pesquisa {
 					new_node.setPai(aux);
 					aux.setFilho_esquerda(new_node);
 				} else {
-					throw new NodeException("N„o h· mais espaÁo para repetiÁ„o!!");
+					throw new NodeException("N√£o h√° mais espa√ßo para repeti√ß√£o!!");
 				}
 			} else if((int)elemento < (int)aux.getElemento()) {
 				Node_binario new_node = new Node_binario(elemento);
@@ -126,7 +126,7 @@ public class Arvore_binaria_de_pesquisa {
 				return find(elemento, no.getFilho_esquerda());
 			}
 			if(hasLeft(no) && hasRight(no) && no.getFilho_direita().getElemento() == elemento) {
-				return find(elemento, no.getFilho_esquerda());
+				return find(elemento, no.getFilho_direita());
 			}
 			return no;
 		} 
@@ -139,6 +139,7 @@ public class Arvore_binaria_de_pesquisa {
 		}
 	return null;
 	}
+	
 	public int size() {
 		return size_node(root);
 	}
@@ -216,7 +217,7 @@ public class Arvore_binaria_de_pesquisa {
 		if(hasLeft(no)) {
 			return no.getFilho_esquerda();
 		} else {
-			throw new NodeException("N„o existe filho na esquerda!");
+			throw new NodeException("NÔøΩo existe filho na esquerda!");
 		}
 	}
 	
@@ -224,7 +225,7 @@ public class Arvore_binaria_de_pesquisa {
 		if(hasRight(no)) {
 			return no.getFilho_direita();
 		} else {
-			throw new NodeException("N„o existe filho na direita");
+			throw new NodeException("NÔøΩo existe filho na direita");
 		}
 	}
 	
@@ -276,9 +277,9 @@ public class Arvore_binaria_de_pesquisa {
 		for(int j=0; j<=height(); j++) {
 			for(int i = 0; i<size();i++) {
 				if(depth(nos.get(i)) == j) {
-					System.out.print("[" + nos.get(i).getElemento() + "]");
+					System.out.print("\t" + nos.get(i).getElemento());
 				} else {
-					System.out.print("[ " + "]");
+					System.out.print("\t");
 				}	
 			}
 		System.out.println();
