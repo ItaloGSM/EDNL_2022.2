@@ -1,8 +1,12 @@
 package arvore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Arvore_binaria {
 	
 	protected Node_binario root;
+	private List<Node_binario> nos = new ArrayList<Node_binario>();
 	
 	
 	// *************************** CONSTRUTOR **************************
@@ -19,6 +23,14 @@ public class Arvore_binaria {
 
 	public void setRoot(Node_binario root) {
 		this.root = root;
+	}
+	
+	public List<Node_binario> getNos() {
+		return nos;
+	}
+
+	public void setNos(List<Node_binario> nos) {
+		this.nos = nos;
 	}
 
 	// **************************** METODOS ****************************
@@ -144,6 +156,25 @@ public class Arvore_binaria {
 		return no.getFilho_direita() != null;
 	}
 	
+	public boolean isLeftChild(Node_binario no) {
+		if (isRoot(no)) {
+			return false;
+		} else if (no == no.getPai().getFilho_esquerda()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isRightChild(Node_binario no) {
+		if (isRoot(no)) {
+			return false;
+		} else if (no == no.getPai().getFilho_direita()){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	// **************************** METODOS DE VARREDURA ****************************
 	
 	public void preOrder(Node_binario no) {
@@ -176,6 +207,37 @@ public class Arvore_binaria {
 		System.out.print(" " + no.getElemento() );
 
 	}
-
-
+	
+	// **************************** VISUALIZADOR ****************************
+	
+	public void mostraArvore() throws NodeException {
+		if(isEmpty()) {
+			throw new NodeException("Arvore vazia!");
+		}
+		organizador(root);
+		System.out.println("ARVORE BINARIA DE PESQUISA:");
+		for(int j=0; j<=height(); j++) {
+			for(int i = 0; i<size();i++) {
+				if(depth(nos.get(i)) == j) {
+					System.out.print("[" + nos.get(i).getElemento() + "]");
+				} else {
+					System.out.print("[ " + "]");
+				}	
+			}
+		System.out.println();
+		}
+	nos.clear();
+	}
+	
+	public void organizador(Node_binario no) {
+		if(no.getFilho_esquerda() != null) {
+			organizador(no.getFilho_esquerda());
+		}
+		nos.add(no);
+		if(no.getFilho_direita() != null) {
+			organizador(no.getFilho_direita());
+		}
+	}
+	
 }
+

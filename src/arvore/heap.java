@@ -30,42 +30,59 @@ public class heap extends Arvore_binaria{
 		}
 	}
 	
-	public Object remove() {
-		Object aux = root.getElemento();
-		root.setElemento(ultimo.getElemento());
-		atualizarUltimoRemove();
-		downheap(root);
-		return aux;
+	public Object remove() throws NodeException {
+		if(isEmpty()) {
+			throw new NodeException("Arvore heap vazia!");
+		}
+		if(size() == 1) {
+			Object aux = root.getElemento();
+			root = null;
+			return aux;
+		} else {
+			Object aux = root.getElemento();
+			root.setElemento(ultimo.getElemento());
+			atualizarUltimoRemove();
+			downheap(root);
+			return aux;
+		}
 	}
 	
 	
 	public Node_binario atualizarUltimoRemove(){
 		Node_binario aux = ultimo;
-		if(ultimo == ultimo.getPai().getFilho_direita()){
+		if(isRightChild(aux)){
 			ultimo.getPai().setFilho_direita(null);
 			ultimo = ultimo.getPai().getFilho_esquerda();
 			return ultimo;
 		} else {
-			ultimo.getPai().setFilho_esquerda(null);
 			if(isRoot(ultimo.getPai())) {
 				ultimo = root;
+				root.setFilho_esquerda(null);
+				return ultimo;
+			} else {
+				aux = aux.getPai();
+				aux.setFilho_esquerda(null);
+				while(isRightChild(aux) == false) {
+					if(isRoot(aux)) {
+						ultimo = aux.getFilho_direita();
+						return ultimo;
+					} else {
+						aux = aux.getPai();
+					}
+				}
+				aux = aux.getPai().getFilho_esquerda();
+				while(aux.getFilho_direita() != null) {
+					aux = aux.getFilho_direita();
+				}
+				ultimo = aux;
 				return ultimo;
 			}
-			while(aux != aux.getPai().getFilho_direita()) {
-				aux = aux.getPai();
-			}
-			aux = aux.getPai().getFilho_esquerda();
-			while(aux.getFilho_direita() != null) {
-				aux = aux.getFilho_direita();
-			}
-			ultimo = aux;
-			return ultimo;
 		}
 	}
 	
 	public Node_binario atualizarUltimo() {
 		Node_binario aux = ultimo;
-		while(aux != aux.getPai().getFilho_esquerda() || aux != root) {
+		while( aux != root && isLeftChild(aux) == false) {
 			aux = aux.getPai();
 		}
 		if(isRoot(aux)) {
@@ -101,8 +118,8 @@ public class heap extends Arvore_binaria{
 	}
 	
 	public void upheap(Node_binario no) {
-		if(no.getElemento() != null) {
-			while((int)no.getElemento() <= (int)no.getPai().getElemento() || no != root) {
+		if(isRoot(no) == false) {
+			while((int)no.getElemento() < (int)no.getPai().getElemento()) {
 				Object aux = no.getElemento();
 				no.setElemento(no.getPai().getElemento());
 				no.getPai().setElemento(aux);
@@ -112,33 +129,38 @@ public class heap extends Arvore_binaria{
 		
 	}
 	
+	
 	public void downheap(Node_binario no) {
-		while(isInternal(no)) {
-			if(no.getFilho_direita() == null && (int)no.getFilho_esquerda().getElemento() < (int)no.getElemento()) {
-				Object aux = no.getElemento();
-				no.setElemento(no.getFilho_esquerda().getElemento());
-				no.getFilho_esquerda().setElemento(aux);
-				downheap(no.getFilho_esquerda());
-			}
-			else if(no.getFilho_direita() != null){
-				if((int)no.getElemento() > (int)no.getFilho_esquerda().getElemento() || (int)no.getElemento() > (int)no.getFilho_direita().getElemento() ) {
-					if((int)no.getFilho_esquerda().getElemento() > (int)no.getFilho_direita().getElemento()) {
-						Object aux = no.getElemento();
-						no.setElemento(no.getFilho_direita().getElemento());
-						no.getFilho_direita().setElemento(aux);
-						downheap(no.getFilho_direita());
-					} else {
+		if(isInternal(no)) {
+			if(hasRight(no)) {
+				System.out.println("1");
+				if((int)no.getElemento() > (int)no.getFilho_direita().getElemento() || (int)no.getElemento() > (int)no.getFilho_esquerda().getElemento() ) {
+					if((int)no.getFilho_direita().getElemento() >= (int)no.getFilho_esquerda().getElemento()) {
 						Object aux = no.getElemento();
 						no.setElemento(no.getFilho_esquerda().getElemento());
 						no.getFilho_esquerda().setElemento(aux);
 						downheap(no.getFilho_esquerda());
+						System.out.println("2");
+					} else {
+						Object aux = no.getElemento();
+						no.setElemento(no.getFilho_direita().getElemento());
+						no.getFilho_direita().setElemento(aux);
+						downheap(no.getFilho_direita());
+						System.out.println("3");
 					}
 				}
+			} else if ((int)no.getElemento() > (int)no.getFilho_esquerda().getElemento()) {
+				Object aux = no.getElemento();
+				no.setElemento(no.getFilho_esquerda().getElemento());
+				no.getFilho_esquerda().setElemento(aux);
+				downheap(no.getFilho_esquerda());
+				System.out.println("4");
+			} else {
+				downheap(no.getFilho_esquerda());
+				System.out.println("5");
 			}
 		}
 	}
-	
-	
 }
 	
 

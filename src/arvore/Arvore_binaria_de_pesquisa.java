@@ -295,5 +295,4 @@ public class Arvore_binaria_de_pesquisa {
 			organizador(no.getFilho_direita());
 		}
 	}
-	
 }
