@@ -47,6 +47,7 @@ public class Hashtable {
 		return quantidade_elementos;
 	}
 	
+	/*
 	public boolean verificaIntegridade(int chave) {
 		int indice = funcaoHash(chave,hashtable_capacidade);
 		while(hashtable[indice] != null) {
@@ -57,9 +58,10 @@ public class Hashtable {
 		}
 	return false;
 	}
+	*/
 	
-	public void insert2(int chave) {
-		if(quantidade_elementos == hashtable_capacidade - 1 || verificaIntegridade(chave) == true ) {
+	public void insert(int chave) {
+		if(quantidade_elementos == hashtable_capacidade - 1 /*|| verificaIntegridade(chave) == true */) {
 			int nova_capacidade = hashtable_capacidade*2;
 			Object[] hashtable_aux = new Object[nova_capacidade];
 			for(int i=0;i<hashtable_capacidade;i++) {
@@ -67,6 +69,7 @@ public class Hashtable {
 					int indice_aux = funcaoHash((int)hashtable[i],nova_capacidade);
 					while(hashtable_aux[indice_aux] != null) {
 						indice_aux++;
+						indice_aux = indice_aux%hashtable_capacidade;
 					}
 					hashtable_aux[indice_aux] = hashtable[i];
 				}
@@ -78,12 +81,14 @@ public class Hashtable {
 			int indice = funcaoHash(chave,hashtable_capacidade);
 			while(hashtable[indice] != null){
 			indice++;
+			indice = indice%hashtable_capacidade;
 			}
 		hashtable[indice] = chave;
 		quantidade_elementos++;
 		}
 	}
 	
+	/*
 	public void insert(int chave) {
 		if(quantidade_elementos == hashtable_capacidade - 1) {
 			int nova_capacidade = hashtable_capacidade*2;
@@ -128,7 +133,7 @@ public class Hashtable {
 		quantidade_elementos++;
 		}
 	}
-	
+	*/
 	public Object remove(int chave) {
 		int indice = funcaoHash(chave,hashtable_capacidade);
 		Object aux;
@@ -139,9 +144,10 @@ public class Hashtable {
 				quantidade_elementos--;
 				return aux;
 			}
-			indice++;
+		indice++;
+		indice = indice%hashtable_capacidade;
 		}
-		return null;
+	return null;
 	}
 	
 	public Object find(int chave) {
@@ -150,9 +156,10 @@ public class Hashtable {
             if ((int)hashtable[indice] == chave){
                 return hashtable[indice];
             }
-            indice++;
+        indice++;
+        indice = indice%hashtable_capacidade;
         }
-        return null;
+    return null;
 	}
 	
     public void print(){
