@@ -1,10 +1,10 @@
 package dicionario;
 
-public class Hastable_Teste {
+public class Hastable_linearprobing_Teste {
 
 	public static void main(String[] args) {
 		
-		Hashtable hash = new Hashtable(1);
+		Hashtable_linearprobing hash = new Hashtable_linearprobing(1);
 		System.out.println("qtd elementos: " + hash.size());
 		hash.insert(10);
 		hash.print();

@@ -1,17 +1,17 @@
 package dicionario;
 
-public class Hashtable {
+public class Hashtable_linearprobing {
 
 	
 	private Object[] hashtable;
 	private int hashtable_capacidade;
 	private int quantidade_elementos;
 	
-	public Hashtable(){
+	public Hashtable_linearprobing(){
 		
 	}
 	
-	public Hashtable(int capacidade){
+	public Hashtable_linearprobing(int capacidade){
 		this.hashtable_capacidade = capacidade;
 		this.quantidade_elementos = 0;
 		this.hashtable = new Object[hashtable_capacidade];
