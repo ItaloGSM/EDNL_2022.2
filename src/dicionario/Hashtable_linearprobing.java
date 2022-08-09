@@ -66,7 +66,7 @@ public class Hashtable_linearprobing {
 				insert(chave);
 		} else {
 			int indice = funcaoHash(chave,hashtable_capacidade);
-			while(hashtable[indice] != null){
+			while(hashtable[indice] != null && hashtable[indice] != "av"){
 			indice++;
 			indice = indice%hashtable_capacidade;
 			}
@@ -109,6 +109,7 @@ public class Hashtable_linearprobing {
                 System.out.print("Indice"+i+" : ["+hashtable[i]+"], ");
             }
         }
+        System.out.print("Indice"+9+" : ["+hashtable[9]+"], ");
         System.out.println();
     }
 }

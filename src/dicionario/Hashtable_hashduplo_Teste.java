@@ -20,6 +20,8 @@ public class Hashtable_hashduplo_Teste {
 		hash.print();
 		hash.remove(9);
 		hash.print();
+		hash.insert(26);
+		hash.print();
 		System.out.println(hash.find(10));
 		System.out.println(hash.getHashtable_capacidade());
 		System.out.println(hash.getQuantidade_elementos());

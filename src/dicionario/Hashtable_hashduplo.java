@@ -97,7 +97,7 @@ public class Hashtable_hashduplo {
 			int fatormult = 0;
 			int hashduplo = funcaoHashduplo(chave);
 			int indice = funcaoHash(chave,hashtable_capacidade,hashduplo,fatormult);
-			while(hashtable[indice] != null){
+			while(hashtable[indice] != null && hashtable[indice] != "av"){
 			fatormult++;
 			indice = funcaoHash(chave,hashtable_capacidade,hashduplo,fatormult);
 			}
