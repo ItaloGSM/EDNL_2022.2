@@ -112,10 +112,11 @@ public class Hashtable_hashduplo {
 		int hashduplo = funcaoHashduplo(chave);
 		int indice = funcaoHash(chave,hashtable_capacidade,hashduplo,fatormult);
 		Object aux;
+
 		while(hashtable[indice] != null) {
 			if((int)hashtable[indice] == chave) {
 				aux = hashtable[indice];
-				hashtable[indice] = null;
+				hashtable[indice] = "av";
 				quantidade_elementos--;
 				return aux;
 			}
@@ -141,7 +142,7 @@ public class Hashtable_hashduplo {
 	
     public void print(){
         for (int i=0; i<hashtable_capacidade; i++){
-            if (hashtable[i] != null){
+            if (hashtable[i] != null && hashtable[i] != "av"){
                 System.out.print("Indice"+i+" : ["+hashtable[i]+"], ");
             }
         }
