@@ -71,5 +71,7 @@ public class Arvore_binaria_de_pesquisa_Teste {
 		a1.insert(4);
 		a1.insert(6);
 		a1.mostraArvore();
+		a1.inOrder(a1.getRoot());
+		System.out.println();
 	}
 }
