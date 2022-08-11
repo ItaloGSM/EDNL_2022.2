@@ -2,18 +2,21 @@ package skiplist;
 
 public class Quad_node {
 	
-	private int elemento;
+	private Object elemento;
 	private Quad_node prev;
 	private Quad_node next;
 	private Quad_node up;
 	private Quad_node down;
 	
 	public Quad_node() {
-
+		this.elemento = null;
+		this.prev = null;
+		this.next = null;
+		this.up = null;
+		this.down = null;
 	}
 	
-	public Quad_node(int elemento) {
-		super();
+	public Quad_node(Object elemento) {
 		this.elemento = elemento;
 		this.prev = null;
 		this.next = null;
@@ -21,12 +24,12 @@ public class Quad_node {
 		this.down = null;
 	}
 
-	public int getElemento() {
+	public Object getElemento() {
 		return elemento;
 	}
 
-	public void setElemento(int elemento) {
-		this.elemento = elemento;
+	public void setElemento(Object menos_inf) {
+		this.elemento = menos_inf;
 	}
 
 	public Quad_node getPrev() {
