@@ -48,7 +48,7 @@ public class Hashtable_linearprobing {
 	}
 	
 	public void insert(int chave) {
-		if(quantidade_elementos == hashtable_capacidade - 1 /*|| verificaIntegridade(chave) == true */) {
+		if(quantidade_elementos == hashtable_capacidade - 1) {
 			int nova_capacidade = hashtable_capacidade*2;
 			Object[] hashtable_aux = new Object[nova_capacidade];
 			for(int i=0;i<hashtable_capacidade;i++) {
