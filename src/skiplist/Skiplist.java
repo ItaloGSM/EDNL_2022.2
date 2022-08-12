@@ -124,6 +124,7 @@ public class Skiplist {
 				first_min.setDown(aux_min);
 				aux_max.setUp(first_max);
 				first_max.setDown(first_max);
+				
 				first_min = aux_min;
 				first_max = aux_max;
 			}
@@ -134,26 +135,44 @@ public class Skiplist {
 			for(int i=height(inicio);i>=(int)random+1;i--) {
 				aux = aux.getDown();
 			}
-			Quad_node anterior = aux;
+			Quad_node anterior = null;
 			for(int i=0;i<(int)random+1;i++) {
 				System.out.println("forrrrrr");
 				Quad_node aux2 = aux;
-				
-				if(aux2.getElemento() == menos_inf && aux2.getNext().getElemento() != mais_inf){
-					aux2 = aux2.getNext();
-				}
-				Quad_node aux3;
-				while(aux2.getNext().getElemento() != mais_inf) {
-					if((int)aux2.getElemento() < (int)aux2.getNext().getElemento()){
-						aux3 = aux2;
-					}
-					aux2 = aux2.getNext();
-				}
-				
 				Quad_node insert_aux = new Quad_node(chave);
-				insert_aux.setPrev(aux2);
-				insert_aux.setNext(aux2.getNext());
-				if(anterior.getElemento() != menos_inf) {
+				
+				if(aux2.getElemento() == menos_inf && aux2.getNext().getElemento() == mais_inf) {
+					insert_aux.setPrev(aux2);
+					insert_aux.setNext(aux2.getNext());
+					aux2.getNext().setPrev(insert_aux);
+					aux2.setNext(insert_aux);
+					
+				} else {
+					if(aux2.getElemento() == menos_inf && aux2.getNext().getElemento() != mais_inf){
+						aux2 = aux2.getNext();
+					}
+					Quad_node aux3 = aux2;
+					while(aux2.getNext().getElemento() != mais_inf) {
+						if(chave > (int)aux2.getNext().getElemento()){
+							aux2 = aux2.getNext();
+							aux3 = aux2;
+						} else {
+							aux2 = aux2.getNext();
+						}
+					}
+					if((int)aux3.getElemento() > chave) {
+						insert_aux.setPrev(aux3.getPrev());
+						insert_aux.getPrev().setNext(insert_aux);
+						aux3.setPrev(insert_aux);
+						insert_aux.setNext(insert_aux);
+					} else {
+						insert_aux.setNext(aux3.getNext());
+						insert_aux.getNext().setPrev(insert_aux);
+						aux3.setNext(insert_aux);
+						insert_aux.setPrev(aux3);
+					}
+				}
+				if(anterior != null) {
 					insert_aux.setUp(anterior);
 					anterior.setDown(insert_aux);
 				}
