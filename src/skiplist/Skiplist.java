@@ -4,22 +4,23 @@ import java.util.Random;
 
 public class Skiplist {
 
-	private Quad_node inicio;
-	private Quad_node fim;
 	private Object menos_inf;
 	private Object mais_inf;
-	private int quatidade_elementos;
+	private Quad_node inicio;
+	private Quad_node fim;
+	private int quantidade_elementos;
 	
-
+	
 	public Skiplist() {
+		this.inicio.setElemento(this.menos_inf);
+		this.fim.setElemento(this.mais_inf);
 		this.inicio.setNext(this.fim);
 		this.fim.setPrev(this.inicio);
-		this.inicio.setElemento(menos_inf);
-		this.fim.setElemento(mais_inf);
+		this.quantidade_elementos=0;
 	}
 	
-	private boolean isEmpty() {
-		return quatidade_elementos == 0;
+	public boolean isEmpty() {
+		return quantidade_elementos == 0;
 	}
 	private int rand(){
 		Random gerador = new Random();
@@ -36,7 +37,7 @@ public class Skiplist {
 	return contador;	
 	}
 	
-	public int height(Quad_node inicio) {
+	private int height(Quad_node inicio) {
 		int contador = 0;
 		while(inicio.getDown() != null) {
 			inicio = inicio.getDown();
@@ -45,8 +46,10 @@ public class Skiplist {
 		return contador;
 	}
 	
-	public void insert(int chave) {
-		int rand_number = rand();
+	public void insert(int chave, Object random) {
+		if(random == null) {
+			random = rand();
+		}
 		if(isEmpty()) {
 			Quad_node insert = new Quad_node(chave);
 			Quad_node first_min = new Quad_node(menos_inf);
@@ -59,7 +62,7 @@ public class Skiplist {
 			fim.setDown(first_max);
 			first_min.setUp(inicio);
 			first_max.setUp(fim);
-			for(int i=0;i<rand_number;i++) {
+			for(int i=0;i<(int)random;i++) {
 				Quad_node aux_insert = new Quad_node(chave);
 				Quad_node aux_min = new Quad_node(menos_inf);
 				Quad_node aux_max = new Quad_node(mais_inf);
@@ -74,9 +77,9 @@ public class Skiplist {
 				first_min = aux_min;
 				first_max = aux_max;
 			}
-		} else if (rand_number+1 <= height(inicio)) {
+		} else if ((int)random+1 <= height(inicio)) {
 			Quad_node aux = inicio;
-			for(int i=height(inicio);i>=rand_number+1;i--) {
+			for(int i=height(inicio);i>=(int)random+1;i--) {
 				aux = aux.getDown();
 			}
 			Quad_node anterior = aux;
@@ -96,50 +99,62 @@ public class Skiplist {
 				aux = aux.getDown();
 			}
 		} else {
-			
-			
+			for(int i=height(inicio);i>=(int)random+1;i--) {
+				Quad_node aux_min = new Quad_node(menos_inf);
+				Quad_node aux_max = new Quad_node(mais_inf);
+				aux_min.setNext(aux_max);
+				aux_max.setPrev(aux_min);
+				inicio.getDown().setUp(aux_min);
+				aux_min.setDown(inicio.getDown());
+				inicio.setDown(aux_min);
+				aux_min.setUp(inicio);
+				fim.getDown().setUp(aux_max);
+				aux_max.setDown(fim.getDown());
+				fim.setDown(aux_max);
+				aux_max.setUp(fim);
+			}
+		insert(chave,random);
+		quantidade_elementos--;
 		}
-		
+	quantidade_elementos++;
 	}
 	
 	public Object remove(int chave) {
-		Quad_node aux = inicio;
-		Quad_node aux2 = busca_Aux(aux, chave);
-		if((int)aux2.getElemento() != chave) {
+		Quad_node aux = busca_Aux(inicio, chave);
+		if((int)aux.getElemento() != chave) {
 			return "NO_SUCH_KEY";
 		} else {
-			while(aux2.getDown() != null) {
-				aux2.getPrev().setNext(aux2.getNext());
-				aux2.getNext().setPrev(aux2.getPrev());
-				aux2 = aux2.getDown();
+			while(aux.getDown() != null) {
+				aux.getPrev().setNext(aux.getNext());
+				aux.getNext().setPrev(aux.getPrev());
+				aux = aux.getDown();
 			}
-		aux2.getPrev().setNext(aux2.getNext());
-		aux2.getNext().setPrev(aux2.getPrev());
-		return aux2.getElemento();
+		aux.getPrev().setNext(aux.getNext());
+		aux.getNext().setPrev(aux.getPrev());
+		return aux.getElemento();
 		}
 	}
 	
 	public Object busca(int chave) {
-		Quad_node aux = inicio;
-		Quad_node aux2 = busca_Aux(aux, chave);
-		if((int)aux2.getElemento() != chave) {
+		Quad_node aux = busca_Aux(inicio, chave);
+		if((int)aux.getElemento() != chave) {
 			return "NO_SUCH_KEY";
 		} else {
-			return aux2.getElemento();
+			return aux.getElemento();
 		}
 	}
 	
 	private Quad_node busca_Aux(Quad_node node, int chave) {
-		if(chave == (int)node.getNext().getElemento()) {
-			return node.getNext();
-		} else if(node.getNext().getElemento() == mais_inf) {
+		if(node.getNext().getElemento() == mais_inf) {
 			if(node.getDown() == null) {
 				return node;
 			} else {
 				busca_Aux(node.getDown(), chave);
-			}
-		} else if(node.getElemento() == menos_inf && node.getNext().getElemento() != mais_inf) {
+			}	
+		} else if(node.getElemento() == menos_inf){
 			busca_Aux(node.getNext(), chave);
+		} else if(chave == (int)node.getNext().getElemento()) {
+			return node.getNext();
 		} else if (chave > (int)node.getNext().getElemento()) {
 			busca_Aux(node.getNext(), chave);
 		} else if (chave < (int)node.getNext().getElemento()) {
@@ -150,5 +165,16 @@ public class Skiplist {
 			}
 		}
 	return null;
+	}
+	
+	public void print() {
+		Quad_node aux = inicio;
+		for(int i=0;i>=height(inicio);i++) {
+			while(aux.getNext().getElemento() != mais_inf) {
+				System.out.print(aux.getNext().getElemento() + " ");
+			}
+			aux = aux.getDown();
+			System.out.println();
+		}
 	}
 }

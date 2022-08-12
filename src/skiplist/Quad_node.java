@@ -9,27 +9,19 @@ public class Quad_node {
 	private Quad_node down;
 	
 	public Quad_node() {
-		this.elemento = null;
-		this.prev = null;
-		this.next = null;
-		this.up = null;
-		this.down = null;
+		
 	}
 	
 	public Quad_node(Object elemento) {
 		this.elemento = elemento;
-		this.prev = null;
-		this.next = null;
-		this.up = null;
-		this.down = null;
 	}
 
 	public Object getElemento() {
 		return elemento;
 	}
 
-	public void setElemento(Object menos_inf) {
-		this.elemento = menos_inf;
+	public void setElemento(Object elemento) {
+		this.elemento = elemento;
 	}
 
 	public Quad_node getPrev() {
@@ -64,7 +56,4 @@ public class Quad_node {
 		this.down = down;
 	}
 	
-	
-	
-
 }
