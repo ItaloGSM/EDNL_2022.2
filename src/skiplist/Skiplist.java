@@ -92,6 +92,7 @@ public class Skiplist {
 		}
 		return contador;
 	}
+
 	
 	public void insert(int chave, Object random) {
 		if(random == null) {
@@ -137,9 +138,18 @@ public class Skiplist {
 			for(int i=0;i<(int)random+1;i++) {
 				System.out.println("forrrrrr");
 				Quad_node aux2 = aux;
-				while((int)aux2.getElemento() < (int)aux2.getNext().getElemento()){
+				
+				if(aux2.getElemento() == menos_inf && aux2.getNext().getElemento() != mais_inf){
 					aux2 = aux2.getNext();
 				}
+				Quad_node aux3;
+				while(aux2.getNext().getElemento() != mais_inf) {
+					if((int)aux2.getElemento() < (int)aux2.getNext().getElemento()){
+						aux3 = aux2;
+					}
+					aux2 = aux2.getNext();
+				}
+				
 				Quad_node insert_aux = new Quad_node(chave);
 				insert_aux.setPrev(aux2);
 				insert_aux.setNext(aux2.getNext());
