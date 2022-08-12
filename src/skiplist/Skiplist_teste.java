@@ -6,6 +6,9 @@ public class Skiplist_teste {
 		
 		Skiplist sk = new Skiplist();
 		sk.insert(10, null);
-		sk.print();
+		sk.insert(15, null);
+		System.out.println("qtd elemento " + sk.getQuantidade_elementos());
+		System.out.println("altura " + sk.height(sk.getInicio()));
+
 	}
 }

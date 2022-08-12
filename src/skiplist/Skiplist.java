@@ -12,16 +12,63 @@ public class Skiplist {
 	
 	
 	public Skiplist() {
-		this.inicio.setElemento(this.menos_inf);
-		this.fim.setElemento(this.mais_inf);
+		this.inicio = new Quad_node(this.menos_inf);
+		this.fim = new Quad_node(this.mais_inf);
 		this.inicio.setNext(this.fim);
 		this.fim.setPrev(this.inicio);
 		this.quantidade_elementos=0;
 	}
 	
+	
+	
+	public Object getMenos_inf() {
+		return menos_inf;
+	}
+
+	public void setMenos_inf(Object menos_inf) {
+		this.menos_inf = menos_inf;
+	}
+
+	public Object getMais_inf() {
+		return mais_inf;
+	}
+
+	public void setMais_inf(Object mais_inf) {
+		this.mais_inf = mais_inf;
+	}
+
+	public Quad_node getInicio() {
+		return inicio;
+	}
+
+	public void setInicio(Quad_node inicio) {
+		this.inicio = inicio;
+	}
+
+	public Quad_node getFim() {
+		return fim;
+	}
+
+	public void setFim(Quad_node fim) {
+		this.fim = fim;
+	}
+
+	public int getQuantidade_elementos() {
+		return quantidade_elementos;
+	}
+
+	public void setQuantidade_elementos(int quantidade_elementos) {
+		this.quantidade_elementos = quantidade_elementos;
+	}
+
+	
+	
+	
+	
 	public boolean isEmpty() {
 		return quantidade_elementos == 0;
 	}
+	
 	private int rand(){
 		Random gerador = new Random();
 		int numero = 0;
@@ -37,7 +84,7 @@ public class Skiplist {
 	return contador;	
 	}
 	
-	private int height(Quad_node inicio) {
+	public int height(Quad_node inicio) {
 		int contador = 0;
 		while(inicio.getDown() != null) {
 			inicio = inicio.getDown();
@@ -50,7 +97,9 @@ public class Skiplist {
 		if(random == null) {
 			random = rand();
 		}
+		System.out.println("random " + random);
 		if(isEmpty()) {
+			System.out.println("11111");
 			Quad_node insert = new Quad_node(chave);
 			Quad_node first_min = new Quad_node(menos_inf);
 			Quad_node first_max = new Quad_node(mais_inf);
@@ -77,13 +126,16 @@ public class Skiplist {
 				first_min = aux_min;
 				first_max = aux_max;
 			}
+			quantidade_elementos++;
 		} else if ((int)random+1 <= height(inicio)) {
+			System.out.println("222222");
 			Quad_node aux = inicio;
 			for(int i=height(inicio);i>=(int)random+1;i--) {
 				aux = aux.getDown();
 			}
 			Quad_node anterior = aux;
-			while(aux.getDown()!=null) {
+			for(int i=0;i<(int)random+1;i++) {
+				System.out.println("forrrrrr");
 				Quad_node aux2 = aux;
 				while((int)aux2.getElemento() < (int)aux2.getNext().getElemento()){
 					aux2 = aux2.getNext();
@@ -98,6 +150,7 @@ public class Skiplist {
 				anterior = insert_aux;
 				aux = aux.getDown();
 			}
+			quantidade_elementos++;
 		} else {
 			for(int i=height(inicio);i>=(int)random+1;i--) {
 				Quad_node aux_min = new Quad_node(menos_inf);
@@ -113,10 +166,8 @@ public class Skiplist {
 				fim.setDown(aux_max);
 				aux_max.setUp(fim);
 			}
-		insert(chave,random);
-		quantidade_elementos--;
+			insert(chave,random);
 		}
-	quantidade_elementos++;
 	}
 	
 	public Object remove(int chave) {
@@ -169,7 +220,7 @@ public class Skiplist {
 	
 	public void print() {
 		Quad_node aux = inicio;
-		for(int i=0;i>=height(inicio);i++) {
+		for(int i=0;i<=height(inicio);i++) {
 			while(aux.getNext().getElemento() != mais_inf) {
 				System.out.print(aux.getNext().getElemento() + " ");
 			}
