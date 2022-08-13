@@ -108,25 +108,31 @@ public class Skiplist {
 			insert.setPrev(first_min);
 			first_max.setPrev(insert);
 			insert.setNext(first_max);
+			
 			inicio.setDown(first_min);
 			fim.setDown(first_max);
 			first_min.setUp(inicio);
 			first_max.setUp(fim);
+			
 			for(int i=0;i<(int)random;i++) {
 				Quad_node aux_insert = new Quad_node(chave);
 				Quad_node aux_min = new Quad_node(menos_inf);
 				Quad_node aux_max = new Quad_node(mais_inf);
 				aux_min.setNext(aux_insert);
-				insert.setPrev(aux_min);
+				aux_insert.setPrev(aux_min);
 				aux_max.setPrev(aux_insert);
-				insert.setNext(aux_max);
+				aux_insert.setNext(aux_max);
+				
 				aux_min.setUp(first_min);
 				first_min.setDown(aux_min);
 				aux_max.setUp(first_max);
 				first_max.setDown(first_max);
+				aux_insert.setUp(insert);
+				insert.setDown(aux_insert);
 				
 				first_min = aux_min;
 				first_max = aux_max;
+				insert = aux_insert;
 			}
 			quantidade_elementos++;
 		} else if ((int)random+1 <= height(inicio)) {
@@ -177,21 +183,23 @@ public class Skiplist {
 					anterior.setDown(insert_aux);
 				}
 				anterior = insert_aux;
-				aux = aux.getDown();
+				if(aux.getDown() != null) {
+					aux = aux.getDown();	
+				}
 			}
 			quantidade_elementos++;
 		} else {
-			for(int i=height(inicio);i>=(int)random+1;i--) {
+			for(int i=height(inicio);i<=(int)random;i++) {
 				Quad_node aux_min = new Quad_node(menos_inf);
 				Quad_node aux_max = new Quad_node(mais_inf);
 				aux_min.setNext(aux_max);
 				aux_max.setPrev(aux_min);
 				inicio.getDown().setUp(aux_min);
 				aux_min.setDown(inicio.getDown());
-				inicio.setDown(aux_min);
-				aux_min.setUp(inicio);
 				fim.getDown().setUp(aux_max);
 				aux_max.setDown(fim.getDown());
+				inicio.setDown(aux_min);
+				aux_min.setUp(inicio);
 				fim.setDown(aux_max);
 				aux_max.setUp(fim);
 			}
@@ -200,7 +208,7 @@ public class Skiplist {
 	}
 	
 	public Object remove(int chave) {
-		Quad_node aux = busca_Aux(inicio, chave);
+		Quad_node aux = busca_aux(inicio, chave);
 		if((int)aux.getElemento() != chave) {
 			return "NO_SUCH_KEY";
 		} else {
@@ -216,7 +224,7 @@ public class Skiplist {
 	}
 	
 	public Object busca(int chave) {
-		Quad_node aux = busca_Aux(inicio, chave);
+		Quad_node aux = busca_aux(inicio, chave);
 		if((int)aux.getElemento() != chave) {
 			return "NO_SUCH_KEY";
 		} else {
@@ -224,36 +232,39 @@ public class Skiplist {
 		}
 	}
 	
-	private Quad_node busca_Aux(Quad_node node, int chave) {
-		if(node.getNext().getElemento() == mais_inf) {
-			if(node.getDown() == null) {
-				return node;
-			} else {
-				busca_Aux(node.getDown(), chave);
-			}	
-		} else if(node.getElemento() == menos_inf){
-			busca_Aux(node.getNext(), chave);
-		} else if(chave == (int)node.getNext().getElemento()) {
-			return node.getNext();
-		} else if (chave > (int)node.getNext().getElemento()) {
-			busca_Aux(node.getNext(), chave);
-		} else if (chave < (int)node.getNext().getElemento()) {
-			if(node.getDown() == null) {
-				return node;
-			} else {
-				busca_Aux(node.getDown(), chave);
-			}
+	
+	private Quad_node busca_aux(Quad_node node, int chave) {
+		Quad_node aux = node;
+		if(aux == inicio) {
+			aux = aux.getDown();
 		}
-	return null;
+		if(aux.getNext().getElemento() == mais_inf) {
+			return busca_aux(aux.getDown(),chave);
+		} else if((int)aux.getNext().getElemento() == chave) {
+			return aux.getNext();
+		} else if((int) aux.getNext().getElemento() > chave) {
+			if(aux.getDown() == null) {
+				return aux;
+			} else {
+				return busca_aux(aux.getDown(), chave);
+			}
+		} else {
+			return busca_aux(aux.getNext(), chave);
+		}
 	}
 	
 	public void print() {
 		Quad_node aux = inicio;
+		Quad_node aux2 = aux;
 		for(int i=0;i<=height(inicio);i++) {
-			while(aux.getNext().getElemento() != mais_inf) {
-				System.out.print(aux.getNext().getElemento() + " ");
+			System.out.print("-INFINITY - ");
+			while(aux2.getNext().getElemento() != mais_inf) {
+				System.out.print(aux2.getNext().getElemento() + " - ");
+				aux2 = aux2.getNext();
 			}
+			System.out.print("+INFINITY");
 			aux = aux.getDown();
+			aux2 = aux;
 			System.out.println();
 		}
 	}
