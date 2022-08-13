@@ -11,9 +11,9 @@ public class Skiplist_teste {
 		sk.print();
 		sk.remove(15);
 		sk.print();
-		System.out.println("qtd elementos distintos: " + sk.getQuantidade_elementos());
-		System.out.println("altura: " + sk.height(sk.getInicio()));
-		System.out.println(sk.busca(20));
+		System.out.println("QUANTIDADE DE ELEMENTOS DISTINTOS: " + sk.getQuantidade_elementos());
+		System.out.println("ALTURA: " + sk.height(sk.getInicio()));
+		System.out.println("BUSCA: " + sk.busca(20));
 
 	}
 }
