@@ -99,6 +99,7 @@ public class Skiplist {
 			random = rand();
 			System.out.println("CHAVE INSERIDA: " + chave);
 			System.out.println("O RANDOM_VALUE GERADO NESSA INSERÇÃO É: " + random);
+			System.out.println();
 		}
 		if(isEmpty()) {
 			Quad_node insert = new Quad_node(chave);
