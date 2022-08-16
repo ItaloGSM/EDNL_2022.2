@@ -259,6 +259,16 @@ public class Arvore_binaria_de_pesquisa {
 		}
 	}
 	
+	public void inOrderTree_sort(Node_binario no, List<Integer> elementos) {
+		if(no.getFilho_esquerda() != null) {
+			inOrderTree_sort(no.getFilho_esquerda(),elementos);
+		}
+		elementos.add((int)no.getElemento());
+		if(no.getFilho_direita() != null) {
+			inOrderTree_sort(no.getFilho_direita(),elementos);
+		}
+	}
+	
 	public void posOrder(Node_binario no) {
 		if(no.getFilho_esquerda() != null) {
 			posOrder(no.getFilho_esquerda());
