@@ -54,10 +54,29 @@ public class Arvore_AVL {
 				no_pai.setFb(no_pai.getFb()-1);
 			}
 			if (no_pai.getFb() != 0) {
+				// ROTAÇÃO A DIREITA
 				if (no_pai.getFb() >= 2) {
-					// rota��o direita
+					Node_binario subarvore_esquerda = no_pai.getFilho_esquerda();
+					//SIMPLES
+					if(subarvore_esquerda.getFb()>=0) {
+						simplerotation_right(no_pai);
+					//DUPLA
+					} else {
+						simplerotation_left(subarvore_esquerda);
+						simplerotation_right(no_pai);
+					}
+				// ROTAÇÃO A ESQUERDA	
 				} else if (no_pai.getFb() <= -2) {
-					//rota��o esquerda
+					Node_binario subarvore_direita = no_pai.getFilho_direita();
+					//SIMPLES
+					if(subarvore_direita.getFb()<=0) {
+						simplerotation_left(no_pai);
+					//DUPLA
+					} else {
+						simplerotation_right(subarvore_direita);
+						simplerotation_left(no_pai);
+					}
+				// SEM ROTAÇÃO, SEGUE A ATUALIZAÇÃO 
 				} else {
 					atualizaFb_insert(no_pai);
 				}
@@ -74,10 +93,29 @@ public class Arvore_AVL {
 				no_pai.setFb(no_pai.getFb()+1);
 			}
 			if (no_pai.getFb() != 0) {
+				// ROTAÇÃO A DIREITA
 				if (no_pai.getFb() >= 2) {
-					// rota��o direita
+					Node_binario subarvore_esquerda = no_pai.getFilho_esquerda();
+					//SIMPLES
+					if(subarvore_esquerda.getFb()>=0) {
+						simplerotation_right(no_pai);
+					//DUPLA
+					} else {
+						simplerotation_left(subarvore_esquerda);
+						simplerotation_right(no_pai);
+					}
+				// ROTAÇÃO A ESQUERDA	
 				} else if (no_pai.getFb() <= -2) {
-					//rota��o esquerda
+					Node_binario subarvore_direita = no_pai.getFilho_direita();
+					//SIMPLES
+					if(subarvore_direita.getFb()<=0) {
+						simplerotation_left(no_pai);
+					//DUPLA
+					} else {
+						simplerotation_right(subarvore_direita);
+						simplerotation_left(no_pai);
+					}
+				// SEM ROTAÇÃO, SEGUE A ATUALIZAÇÃO 
 				} else {
 					atualizaFb_remove(no_pai);
 				}
@@ -113,6 +151,10 @@ public class Arvore_AVL {
 			no.setPai(novo_no);
 			no.setFilho_direita(null);
 		}
+		// B = no
+		// A = novo_no
+		no.setFb((no.getFb()+1) - min(novo_no.getFb(),0));
+		novo_no.setFb((novo_no.getFb()+1) + max(no.getFb(),0));
 	}
 	
 	public void simplerotation_right(Node_binario no) {
@@ -143,6 +185,10 @@ public class Arvore_AVL {
 			no.setPai(novo_no);
 			no.setFilho_esquerda(null);
 		}
+		// B = no
+		// A = novo_no
+		no.setFb((no.getFb()-1) - max(novo_no.getFb(),0));
+		novo_no.setFb((novo_no.getFb()-1) + min(no.getFb(),0));
 	}
 	
 	
