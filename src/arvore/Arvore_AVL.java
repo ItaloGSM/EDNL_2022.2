@@ -46,14 +46,18 @@ public class Arvore_AVL {
 	}
 	
 	public void atualizaFb_insert(Node_binario no) {
+		boolean ehdireita = false;
+		boolean ehesquerda = false;
 		if (no != root) {
 			Node_binario no_pai = no.getPai();
 			if (no_pai.getFilho_esquerda() == no) {
 				no_pai.setFb(no_pai.getFb()+1);
+				ehesquerda = true;
 			} else {
 				no_pai.setFb(no_pai.getFb()-1);
+				ehdireita = true;
 			}
-			if (no_pai.getFb() != 0) {
+			if (no_pai.getFb() == 0) {
 				// ROTAÇÃO A DIREITA
 				if (no_pai.getFb() >= 2) {
 					Node_binario subarvore_esquerda = no_pai.getFilho_esquerda();
@@ -78,19 +82,29 @@ public class Arvore_AVL {
 					}
 				// SEM ROTAÇÃO, SEGUE A ATUALIZAÇÃO 
 				} else {
-					atualizaFb_insert(no_pai);
+					if (no_pai.getPai() != root) {
+						if(no_pai == no_pai.getPai().getFilho_esquerda() && ehesquerda == true) {
+							atualizaFb_remove(no_pai);
+						} else if (no_pai == no_pai.getPai().getFilho_direita() && ehdireita == true) {
+							atualizaFb_remove(no_pai);
+						}
+					}
 				}
 			}
 		}
 	}
 	
 	public void atualizaFb_remove(Node_binario no) {
+		boolean ehdireita = false;
+		boolean ehesquerda = false;
 		if (no != root) {
 			Node_binario no_pai = no.getPai();
 			if (no_pai.getFilho_esquerda() == no) {
 				no_pai.setFb(no_pai.getFb()-1);
+				ehesquerda = true;
 			} else {
 				no_pai.setFb(no_pai.getFb()+1);
+				ehdireita = true;
 			}
 			if (no_pai.getFb() != 0) {
 				// ROTAÇÃO A DIREITA
@@ -117,7 +131,13 @@ public class Arvore_AVL {
 					}
 				// SEM ROTAÇÃO, SEGUE A ATUALIZAÇÃO 
 				} else {
-					atualizaFb_remove(no_pai);
+					if (no_pai.getPai() != root) {
+						if(no_pai == no_pai.getPai().getFilho_esquerda() && ehesquerda == true) {
+							atualizaFb_remove(no_pai);
+						} else if (no_pai == no_pai.getPai().getFilho_direita() && ehdireita == true) {
+							atualizaFb_remove(no_pai);
+						}
+					}
 				}
 			}
 		}
@@ -202,14 +222,17 @@ public class Arvore_AVL {
 					Node_binario new_node = new Node_binario(elemento);
 					new_node.setPai(aux);
 					aux.setFilho_esquerda(new_node);
+					atualizaFb_insert(new_node);
 				} else if(hasLeft(aux) && hasRight(aux) == false){
 					Node_binario new_node = new Node_binario(elemento);
 					new_node.setPai(aux);
 					aux.setFilho_direita(new_node);
+					atualizaFb_insert(new_node);
 				} else if(hasLeft(aux) == false && hasRight(aux)){
 					Node_binario new_node = new Node_binario(elemento);
 					new_node.setPai(aux);
 					aux.setFilho_esquerda(new_node);
+					atualizaFb_insert(new_node);
 				} else {
 					throw new NodeException("Não há mais espaço para repetição!!");
 				}
@@ -217,10 +240,12 @@ public class Arvore_AVL {
 				Node_binario new_node = new Node_binario(elemento);
 				new_node.setPai(aux);
 				aux.setFilho_esquerda(new_node);
+				atualizaFb_insert(new_node);
 			} else if((int)elemento > (int)aux.getElemento()) {
 				Node_binario new_node = new Node_binario(elemento);
 				new_node.setPai(aux);
 				aux.setFilho_direita(new_node);
+				atualizaFb_insert(new_node);
 			}
 		}
 	}
@@ -233,17 +258,21 @@ public class Arvore_AVL {
 		} else {
 			if(isExternal(aux)) {
 				if(aux == aux.getPai().getFilho_esquerda()) {
+					//atualizaFb_remove(aux);
 					aux.getPai().setFilho_esquerda(null);
 					aux.setPai(null);
 				} else {
+					//atualizaFb_remove(aux);
 					aux.getPai().setFilho_direita(null);
 					aux.setPai(null);
 				}
 			}else if(aux.getFilho_direita() == null) {
 				if(aux == aux.getPai().getFilho_esquerda()) {
+					//atualizaFb_remove(aux);
 					aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
 					aux.getFilho_esquerda().setPai(aux.getPai());
 				} else {
+					//atualizaFb_remove(aux);
 					aux.getPai().setFilho_direita(aux.getFilho_esquerda());
 					aux.getFilho_esquerda().setPai(aux.getPai());
 				}
@@ -255,11 +284,13 @@ public class Arvore_AVL {
 				}
 				aux.setElemento(aux2.getElemento());
 				if(cont > 0) {
+					//atualizaFb_remove(aux);
 					aux2.getPai().setFilho_esquerda(aux2.getFilho_direita());
 					if(aux2.getFilho_direita() != null) {
 						aux2.getFilho_direita().setPai(aux);
 					}
 				} else {
+					//atualizaFb_remove(aux);
 					aux.setElemento(aux2.getElemento());
 					aux.setFilho_direita(aux2.getFilho_direita());
 					if(aux2.getFilho_direita() != null) {
