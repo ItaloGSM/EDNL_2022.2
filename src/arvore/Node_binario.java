@@ -6,6 +6,7 @@ public class Node_binario {
 	private Node_binario pai;
 	private Node_binario filho_direita;
 	private Node_binario filho_esquerda;
+	private int fb;
 	
 	public Node_binario() {
 		
@@ -15,8 +16,19 @@ public class Node_binario {
 		this.elemento = elemento;
 		this.filho_direita = null;
 		this.filho_esquerda = null;
+		this.fb = 0;
+	}
+	
+	
+
+
+	public int getFb() {
+		return fb;
 	}
 
+	public void setFb(int fb) {
+		this.fb = fb;
+	}
 
 	public Object getElemento() {
 		return elemento;
@@ -27,8 +39,8 @@ public class Node_binario {
 	public Node_binario getPai() {
 		return pai;
 	}
-	public void setPai(Node_binario pai) {
-		this.pai = pai;
+	public void setPai(Node_binario aux) {
+		this.pai = aux;
 	}
 	public Node_binario getFilho_direita() {
 		return filho_direita;
