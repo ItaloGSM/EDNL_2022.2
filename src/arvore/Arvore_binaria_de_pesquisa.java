@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Arvore_binaria_de_pesquisa {
 	
-	private Node_binario root;
-	private List<Node_binario> nos = new ArrayList<Node_binario>();
+	protected Node_binario root;
+	protected List<Node_binario> nos = new ArrayList<Node_binario>();
 
 
 	public Arvore_binaria_de_pesquisa() {

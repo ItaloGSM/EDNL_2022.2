@@ -1,31 +1,10 @@
 package arvore;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 
-public class Arvore_AVL {
-
-	private Node_binario root;
-	private List<Node_binario> nos = new ArrayList<Node_binario>();
 
 	public Arvore_AVL() {
 		super();
-	}
-
-	public List<Node_binario> getNos() {
-		return nos;
-	}
-
-	public void setNos(List<Node_binario> nos) {
-		this.nos = nos;
-	}
-
-	public Node_binario getRoot() {
-		return root;
-	}
-
-	public void setRoot(Node_binario root) {
-		this.root = root;
 	}
 
 	public int min(int valor1, int valor2) {
@@ -44,15 +23,15 @@ public class Arvore_AVL {
 		}
 	}
 	
-	public void atualizaFb(Node_binario no, Boolean leftchild, int operação) {
-		if (operação == 1) {
+	public void atualizaFb(Node_binario no, Boolean leftchild, int operacao) {
+		if (operacao == 1) {
 			//INSERT
 			if (leftchild == true) {
 				no.setFb(no.getFb() + 1);
 			} else {
 				no.setFb(no.getFb() - 1);
 			}
-		} else if (operação == 2 ) {
+		} else if (operacao == 2 ) {
 			//REMOVE
 			if (leftchild == true) {
 				no.setFb(no.getFb() - 1);
@@ -83,10 +62,10 @@ public class Arvore_AVL {
 				simplerotation_left(no);
 			}
 			// SEM ROTACAO, SEGUE A ATUALIZAÃ‡ÃƒO
-		} else if (no != root && no.getFb() != 0 && operação == 1) {
+		} else if (no != root && no.getFb() != 0 && operacao == 1) {
 			//INSERT
 			atualizaFb(no.getPai(), isLeftChild(no), 1);
-		} else if (no != root && no.getFb() == 0 && operação == 2) {
+		} else if (no != root && no.getFb() == 0 && operacao == 2) {
 			//REMOVE
 			atualizaFb(no.getPai(), isLeftChild(no.getPai()), 2);
 		}
@@ -263,130 +242,6 @@ public class Arvore_AVL {
 		System.out.println("Chave " + elemento + " removida com sucesso!");
 	}
 
-	public Node_binario find(Object elemento, Node_binario no) {
-
-		if (isExternal(no)) {
-			return no;
-		}
-		if ((int) elemento < (int) no.getElemento()) {
-			if (no.getFilho_esquerda() == null) {
-				return no;
-			}
-			return find(elemento, no.getFilho_esquerda());
-		} else if ((int) elemento == (int) no.getElemento()) {
-			if (hasLeft(no) && hasRight(no) && no.getFilho_esquerda().getElemento() == elemento) {
-				return find(elemento, no.getFilho_esquerda());
-			}
-			if (hasLeft(no) && hasRight(no) && no.getFilho_direita().getElemento() == elemento) {
-				return find(elemento, no.getFilho_direita());
-			}
-			return no;
-		} else if ((int) elemento > (int) no.getElemento()) {
-			if (no.getFilho_direita() == null) {
-				return no;
-			}
-			return find(elemento, no.getFilho_direita());
-		}
-		return null;
-	}
-
-	public int size() {
-		return size_node(root);
-	}
-
-	public int size_node(Node_binario no) {
-		int aux = 0;
-		if (no.getFilho_esquerda() != null) {
-			aux = aux + size_node(no.getFilho_esquerda());
-		}
-		if (no.getFilho_direita() != null) {
-			aux = aux + size_node(no.getFilho_direita());
-		}
-		return aux + 1;
-	}
-
-	public int height() {
-		return height_node(root);
-	}
-
-	public int height_node(Node_binario no) {
-		if (no == null || isExternal(no)) {
-			return 0;
-		} else {
-			int h = 0;
-			if (height_node(no.getFilho_direita()) >= height_node(no.getFilho_esquerda())) {
-				h = h + height_node(no.getFilho_direita());
-			} else {
-				h = h + height_node(no.getFilho_esquerda());
-			}
-			return 1 + h;
-		}
-	}
-
-	public boolean isEmpty() {
-		return root == null;
-	}
-
-	public Node_binario root() {
-		return root;
-	}
-
-	public Node_binario parent(Node_binario no) {
-		return no.getPai();
-	}
-
-	public boolean isInternal(Node_binario no) {
-		return no.getFilho_direita() != null || no.getFilho_esquerda() != null;
-	}
-
-	public boolean isExternal(Node_binario no) {
-		return no.getFilho_direita() == null && no.getFilho_esquerda() == null;
-
-	}
-
-	public boolean isRoot(Node_binario no) {
-		return no == root;
-	}
-
-	public int depth(Node_binario no) {
-		if (isRoot(no)) {
-			return 0;
-		} else {
-			return 1 + depth(parent(no));
-		}
-
-	}
-
-	public Object replace(Node_binario no, Object o) {
-		Object aux = no.getElemento();
-		no.setElemento(o);
-		return aux;
-	}
-
-	public Node_binario leftChild(Node_binario no) throws NodeException {
-		if (hasLeft(no)) {
-			return no.getFilho_esquerda();
-		} else {
-			throw new NodeException("Nï¿½o existe filho na esquerda!");
-		}
-	}
-
-	public Node_binario rightChild(Node_binario no) throws NodeException {
-		if (hasRight(no)) {
-			return no.getFilho_direita();
-		} else {
-			throw new NodeException("Nï¿½o existe filho na direita");
-		}
-	}
-
-	public boolean hasLeft(Node_binario no) {
-		return no.getFilho_esquerda() != null;
-	}
-
-	public boolean hasRight(Node_binario no) {
-		return no.getFilho_direita() != null;
-	}
-
 	public boolean isLeftChild(Node_binario no) {
 		if (no.getPai().getFilho_esquerda() == no) {
 			return true;
@@ -403,58 +258,13 @@ public class Arvore_AVL {
 		}
 	}
 
-	// **************************** METODOS DE VARREDURA
-	// ****************************
-
-	public void preOrder(Node_binario no) {
-		System.out.print(" " + no.getElemento());
-		if (no.getFilho_esquerda() != null) {
-			preOrder(no.getFilho_esquerda());
-		}
-		if (no.getFilho_direita() != null) {
-			preOrder(no.getFilho_direita());
-		}
-	}
-
-	public void inOrder(Node_binario no) {
-		if (no.getFilho_esquerda() != null) {
-			inOrder(no.getFilho_esquerda());
-		}
-		System.out.print(" " + no.getElemento());
-		if (no.getFilho_direita() != null) {
-			inOrder(no.getFilho_direita());
-		}
-	}
-
-	public void inOrderTree_sort(Node_binario no, List<Integer> elementos) {
-		if (no.getFilho_esquerda() != null) {
-			inOrderTree_sort(no.getFilho_esquerda(), elementos);
-		}
-		elementos.add((int) no.getElemento());
-		if (no.getFilho_direita() != null) {
-			inOrderTree_sort(no.getFilho_direita(), elementos);
-		}
-	}
-
-	public void posOrder(Node_binario no) {
-		if (no.getFilho_esquerda() != null) {
-			posOrder(no.getFilho_esquerda());
-		}
-		if (no.getFilho_direita() != null) {
-			posOrder(no.getFilho_direita());
-		}
-		System.out.print(" " + no.getElemento());
-	}
-
-	// **************************** VISUALIZADOR ****************************
-
 	public void mostraArvore() {
 		organizador(root);
 		System.out.println("ARVORE BINARIA DE PESQUISA:");
 		for (int j = 0; j <= height(); j++) {
 			for (int i = 0; i < size(); i++) {
 				if (depth(nos.get(i)) == j) {
-					System.out.print("\t" + nos.get(i).getElemento());
+					System.out.print("\t" + nos.get(i).getElemento() + "[" + nos.get(i).getFb() + "]");
 				} else {
 					System.out.print("\t");
 				}
@@ -462,15 +272,5 @@ public class Arvore_AVL {
 			System.out.println();
 		}
 		nos.clear();
-	}
-
-	public void organizador(Node_binario no) {
-		if (no.getFilho_esquerda() != null) {
-			organizador(no.getFilho_esquerda());
-		}
-		nos.add(no);
-		if (no.getFilho_direita() != null) {
-			organizador(no.getFilho_direita());
-		}
 	}
 }
