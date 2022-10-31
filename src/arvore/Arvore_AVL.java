@@ -50,6 +50,9 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 				simplerotation_left(subarvore_esquerda);
 				simplerotation_right(no);
 			}
+			if(no.getPai() != null && operacao == 2) {
+				atualizaFb(no.getPai(), isLeftChild(no), 2);
+			}
 		// ROTACAO A ESQUERDA
 		} else if (no.getFb() <= -2) {
 			Node_binario subarvore_direita = no.getFilho_direita();
@@ -60,6 +63,9 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 			} else {
 				simplerotation_right(subarvore_direita);
 				simplerotation_left(no);
+			}
+			if(no.getPai() != null && operacao == 2) {
+				atualizaFb(no.getPai(), isLeftChild(no), 2);
 			}
 			// SEM ROTACAO, SEGUE A ATUALIZAÇÃO
 		} else if (no != root && no.getFb() != 0 && operacao == 1) {
