@@ -69,20 +69,30 @@ public class Arvore_binaria_de_pesquisa {
 			throw new NodeException("O Node com a chave "+ elemento + " nao existe!");
 		} else {
 			if(isExternal(aux)) {
-				if(aux == aux.getPai().getFilho_esquerda()) {
-					aux.getPai().setFilho_esquerda(null);
-					aux.setPai(null);
+				if(isRoot(aux) == true) {
+					root = null;
 				} else {
-					aux.getPai().setFilho_direita(null);
-					aux.setPai(null);
+					if(aux == aux.getPai().getFilho_esquerda()) {
+						aux.getPai().setFilho_esquerda(null);
+						aux.setPai(null);
+					} else {
+						aux.getPai().setFilho_direita(null);
+						aux.setPai(null);
+					}
 				}
 			}else if(aux.getFilho_direita() == null) {
-				if(aux == aux.getPai().getFilho_esquerda()) {
-					aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
-					aux.getFilho_esquerda().setPai(aux.getPai());
+				if(isRoot(aux) == true) {
+					aux.setPai(null);
+					root = aux.getFilho_esquerda();
+					aux.setFilho_esquerda(null);
 				} else {
-					aux.getPai().setFilho_direita(aux.getFilho_esquerda());
-					aux.getFilho_esquerda().setPai(aux.getPai());
+					if(aux == aux.getPai().getFilho_esquerda()) {
+						aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
+						aux.getFilho_esquerda().setPai(aux.getPai());
+					} else {
+						aux.getPai().setFilho_direita(aux.getFilho_esquerda());
+						aux.getFilho_esquerda().setPai(aux.getPai());
+					}
 				}
 			}else {
 				Node_binario aux2 = aux.getFilho_direita();
@@ -282,19 +292,24 @@ public class Arvore_binaria_de_pesquisa {
 	// **************************** VISUALIZADOR ****************************
 	
 	public void mostraArvore() {
-		organizador(root);
-		System.out.println("ARVORE BINARIA DE PESQUISA:");
-		for(int j=0; j<=height(); j++) {
-			for(int i = 0; i<size();i++) {
-				if(depth(nos.get(i)) == j) {
-					System.out.print("\t" + nos.get(i).getElemento());
-				} else {
-					System.out.print("\t");
-				}	
+		if(root == null) {
+			System.out.println("ARVORE VAZIA!");
+		} else {
+			organizador(root);
+			System.out.println("ARVORE BINARIA DE PESQUISA:");
+			for(int j=0; j<=height(); j++) {
+				for(int i = 0; i<size();i++) {
+					if(depth(nos.get(i)) == j) {
+						System.out.print("\t" + nos.get(i).getElemento());
+					} else {
+						System.out.print("\t");
+					}	
+				}
+			System.out.println();
 			}
-		System.out.println();
+		nos.clear();
 		}
-	nos.clear();
+
 	}
 	
 	public void organizador(Node_binario no) {

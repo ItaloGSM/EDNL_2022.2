@@ -73,7 +73,7 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 			atualizaFb(no.getPai(), isLeftChild(no), 1);
 		} else if (no != root && no.getFb() == 0 && operacao == 2) {
 			//REMOVE
-			atualizaFb(no.getPai(), isLeftChild(no.getPai()), 2);
+			atualizaFb(no.getPai(), isLeftChild(no), 2);
 		}
 	}
 
@@ -191,6 +191,7 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 
 	public void remove(Object elemento) throws NodeException {
 		Node_binario aux = find(elemento, root);
+		System.out.println("REMOVENDO -" + aux.getElemento());
 		Node_binario no_pai;
 		Boolean IsLeftChild;
 		int cont = 0;
@@ -198,28 +199,38 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 			throw new NodeException("O Node com a chave " + elemento + " nao existe!");
 		} else {
 			if (isExternal(aux)) {
-				no_pai = aux.getPai();
-				IsLeftChild = isLeftChild(aux);
-				if (aux == aux.getPai().getFilho_esquerda()) {
-					aux.getPai().setFilho_esquerda(null);
-					aux.setPai(null);
-					atualizaFb(no_pai, IsLeftChild,2);
+				if(isRoot(aux) == true) {
+					root = null;
 				} else {
-					aux.getPai().setFilho_direita(null);
-					aux.setPai(null);
-					atualizaFb(no_pai, IsLeftChild,2);
+					no_pai = aux.getPai();
+					IsLeftChild = isLeftChild(aux);
+					if (aux == aux.getPai().getFilho_esquerda()) {
+						aux.getPai().setFilho_esquerda(null);
+						aux.setPai(null);
+						atualizaFb(no_pai, IsLeftChild,2);
+					} else {
+						aux.getPai().setFilho_direita(null);
+						aux.setPai(null);
+						atualizaFb(no_pai, IsLeftChild,2);
+					}
 				}
 			} else if (aux.getFilho_direita() == null) {
-				no_pai = aux.getPai();
-				IsLeftChild = isLeftChild(aux);
-				if (aux == aux.getPai().getFilho_esquerda()) {
-					aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
-					aux.getFilho_esquerda().setPai(aux.getPai());
-					atualizaFb(no_pai, IsLeftChild,2);
+				if(isRoot(aux) == true) {
+					aux.setPai(null);
+					root = aux.getFilho_esquerda();
+					aux.setFilho_esquerda(null);
 				} else {
-					aux.getPai().setFilho_direita(aux.getFilho_esquerda());
-					aux.getFilho_esquerda().setPai(aux.getPai());
-					atualizaFb(no_pai, IsLeftChild,2);
+					no_pai = aux.getPai();
+					IsLeftChild = isLeftChild(aux);
+					if (aux == aux.getPai().getFilho_esquerda()) {
+						aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
+						aux.getFilho_esquerda().setPai(aux.getPai());
+						atualizaFb(no_pai, IsLeftChild,2);
+					} else {
+						aux.getPai().setFilho_direita(aux.getFilho_esquerda());
+						aux.getFilho_esquerda().setPai(aux.getPai());
+						atualizaFb(no_pai, IsLeftChild,2);
+					}
 				}
 			} else {
 				Node_binario aux2 = aux.getFilho_direita();
@@ -265,6 +276,9 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 	}
 
 	public void mostraArvore() {
+		if(root == null) {
+			System.out.println("ARVORE VAZIA!");
+		} else {
 		organizador(root);
 		System.out.println("ARVORE BINARIA DE PESQUISA:");
 		for (int j = 0; j <= height(); j++) {
@@ -278,5 +292,6 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 			System.out.println();
 		}
 		nos.clear();
+	}
 	}
 }

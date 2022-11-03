@@ -5,6 +5,7 @@ public class Arvore_binaria_de_pesquisa_Teste {
 
 	public static void main(String[] args) throws NodeException {
 		Arvore_binaria_de_pesquisa a1 = new Arvore_binaria_de_pesquisa();
+		
 		a1.insert(5);
 		a1.insert(2);
 		a1.insert(3);
