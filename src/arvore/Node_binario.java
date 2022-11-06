@@ -7,6 +7,8 @@ public class Node_binario {
 	private Node_binario filho_direita;
 	private Node_binario filho_esquerda;
 	private int fb;
+	private boolean Rubro;
+	private boolean Negro;
 	
 	public Node_binario() {
 		
@@ -17,10 +19,31 @@ public class Node_binario {
 		this.filho_direita = null;
 		this.filho_esquerda = null;
 		this.fb = 0;
+		this.Rubro = false;
+		this.Negro = false;
 	}
 	
 	
+	
+	
 
+
+
+	public boolean isRubro() {
+		return Rubro;
+	}
+
+	public void setRubro(boolean rubro) {
+		Rubro = rubro;
+	}
+
+	public boolean isNegro() {
+		return Negro;
+	}
+
+	public void setNegro(boolean negro) {
+		Negro = negro;
+	}
 
 	public int getFb() {
 		return fb;

@@ -216,7 +216,7 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 				}
 			} else if (aux.getFilho_direita() == null) {
 				if(isRoot(aux) == true) {
-					aux.setPai(null);
+					aux.getFilho_esquerda().setPai(null);
 					root = aux.getFilho_esquerda();
 					aux.setFilho_esquerda(null);
 				} else {
@@ -280,7 +280,7 @@ public class Arvore_AVL extends Arvore_binaria_de_pesquisa{
 			System.out.println("ARVORE VAZIA!");
 		} else {
 		organizador(root);
-		System.out.println("ARVORE BINARIA DE PESQUISA:");
+		System.out.println("ARVORE AVL:");
 		for (int j = 0; j <= height(); j++) {
 			for (int i = 0; i < size(); i++) {
 				if (depth(nos.get(i)) == j) {

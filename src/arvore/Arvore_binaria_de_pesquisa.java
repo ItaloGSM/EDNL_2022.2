@@ -82,7 +82,7 @@ public class Arvore_binaria_de_pesquisa {
 				}
 			}else if(aux.getFilho_direita() == null) {
 				if(isRoot(aux) == true) {
-					aux.setPai(null);
+					aux.getFilho_esquerda().setPai(null);
 					root = aux.getFilho_esquerda();
 					aux.setFilho_esquerda(null);
 				} else {
