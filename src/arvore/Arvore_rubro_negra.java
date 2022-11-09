@@ -304,6 +304,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	
 	public void fixInsert(Node_binario no) {
 		System.out.println("ENTREI NO FIX: " + no.getElemento());
+		int count = 0;
 		if (no == root) {
 			no.setNegro(true);
 		} else {
@@ -325,6 +326,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					// CASO 2 - NO INSERIDO � FILHO ESQUERDO
 					if (isLeftChild(pai) && avo.getFilho_direita() != null) {
 						if (avo.getFilho_direita().isRubro() == true) {
+							count++;
 							caso2Insercao(no, true);
 							if (avo != root) {
 								if (avo.getPai().isRubro() == true) {
@@ -337,7 +339,8 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					// CASO 2 - NO INSERIDO � FILHO DIREITO
 					if (isRightChild(pai) && avo.getFilho_esquerda() != null) {
 						if (avo.getFilho_esquerda().isRubro() == true) {
-
+							System.out.println("2");
+							count++;
 							caso2Insercao(no, false);
 							if (avo != root) {
 
@@ -349,12 +352,12 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					}
 					
 					// CASO 3 - NO INSERIDO � FILHO ESQUERDO
-					else if (isLeftChild(pai) && avo.getFilho_direita() == null){
+					if (isLeftChild(pai) && avo.getFilho_direita() == null && count == 0){
 						System.out.println("2");
 
 						caso3A_3DInsercao(no);
 					}
-					else if(isLeftChild(pai) && avo.getFilho_direita() != null) {
+					if(isLeftChild(pai) && avo.getFilho_direita() != null && count == 0) {
 						System.out.println("3");
 
 						if(avo.getFilho_direita().isNegro() == true){
@@ -365,12 +368,12 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					}
 					
 					// CASO 3 - NO INSERIDO � FILHO DIREITO
-					else if (isRightChild(pai) && avo.getFilho_esquerda() == null) {
+					if (isRightChild(pai) && avo.getFilho_esquerda() == null && count == 0) {
 						System.out.println("5");
 
 						caso3B_3CInsercao(no);
 					}
-					else if(isRightChild(pai) && avo.getFilho_esquerda() != null) {
+					if(isRightChild(pai) && avo.getFilho_esquerda() != null && count == 0) {
 						System.out.println("6");
 
 						if(avo.getFilho_esquerda().isNegro() == true) {
@@ -554,7 +557,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			for (int j = 0; j <= height(); j++) {
 				for (int i = 0; i < size(); i++) {
 					if (depth(nos.get(i)) == j) {
-						System.out.print("\t" + nos.get(i).getElemento() + (nos.get(i).isRubro() == true ? "[RUBRO]" : "[NEGRO]"));
+						if(nos.get(i).isRubro() == true) {
+							System.err.print("\t" + nos.get(i).getElemento());
+						} else {
+							System.out.print("\t" + nos.get(i).getElemento());
+						}
 					} else {
 						System.out.print("\t");
 					}
