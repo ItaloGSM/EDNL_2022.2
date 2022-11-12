@@ -122,22 +122,22 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	public void fixRemove(String v, Node_binario no_sucessor) {
 		String sucessor = (no_sucessor.isNegro() == true ? "NEGRO" : "RUBRO");
 		
-			// CASO 1 REMO��O
+			// CASO 1 REMOCAO
 			if( v == "RUBRO" && sucessor == "RUBRO") {
 				// NADA PRECISA SER FEITO
 			}
 			
-			// CASO 2 REMO��O
+			// CASO 2 REMOCAO
 			if( v == "NEGRO" && sucessor == "RUBRO") {
 				no_sucessor.setNegro(true);
 				no_sucessor.setRubro(false);
 			}
 			
-			// CASO 3 REMO��O
+			// CASO 3 REMOCAO
 			if( v == "NEGRO" && sucessor == "NEGRO") {
 				caso3Remocao(no_sucessor);
 			}		
-			// CASO 4 REMO��O
+			// CASO 4 REMOCAO
 			if( v == "RUBRO" && sucessor == "NEGRO") {
 				no_sucessor.setNegro(false);
 				no_sucessor.setRubro(true);
@@ -303,44 +303,36 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	
 	
 	public void fixInsert(Node_binario no) {
-		System.out.println("ENTREI NO FIX: " + no.getElemento());
-		int count = 0;
 		if (no == root) {
 			no.setNegro(true);
 		} else {
-
 			Node_binario pai = no.getPai();
 			Node_binario avo = null;
 			if (pai != root) {
 				avo = pai.getPai();
 			}
-
 			// CASO 1
 			if (pai.isNegro() == true) {
 				// NADA PRECISA SER FEITO
 			}
-
 			if (pai.isRubro() == true && pai != root) {
 				if (avo.isNegro() == true) {
-					System.out.println("1");
-					// CASO 2 - NO INSERIDO � FILHO ESQUERDO
+					
+					// CASO 2 - NO INSERIDO EH FILHO ESQUERDO
 					if (isLeftChild(pai) && avo.getFilho_direita() != null) {
 						if (avo.getFilho_direita().isRubro() == true) {
-							count++;
 							caso2Insercao(no, true);
 							if (avo != root) {
 								if (avo.getPai().isRubro() == true) {
 									fixInsert(avo);
 								}
 							}
+						return;
 						}
 					}
-					
-					// CASO 2 - NO INSERIDO � FILHO DIREITO
+					// CASO 2 - NO INSERIDO EH FILHO DIREITO
 					if (isRightChild(pai) && avo.getFilho_esquerda() != null) {
 						if (avo.getFilho_esquerda().isRubro() == true) {
-							System.out.println("2");
-							count++;
 							caso2Insercao(no, false);
 							if (avo != root) {
 
@@ -348,46 +340,34 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 									fixInsert(avo);
 								}
 							}
+						return;
 						}
 					}
 					
-					// CASO 3 - NO INSERIDO � FILHO ESQUERDO
-					if (isLeftChild(pai) && avo.getFilho_direita() == null && count == 0){
-						System.out.println("2");
-
+					// CASO 3 - NO INSERIDO EH FILHO ESQUERDO
+					if (isLeftChild(pai) && avo.getFilho_direita() == null){
 						caso3A_3DInsercao(no);
 					}
-					if(isLeftChild(pai) && avo.getFilho_direita() != null && count == 0) {
-						System.out.println("3");
-
+					if(isLeftChild(pai) && avo.getFilho_direita() != null) {
 						if(avo.getFilho_direita().isNegro() == true){
-							System.out.println("4");
-
 							caso3A_3DInsercao(no);
 						}
 					}
 					
-					// CASO 3 - NO INSERIDO � FILHO DIREITO
-					if (isRightChild(pai) && avo.getFilho_esquerda() == null && count == 0) {
-						System.out.println("5");
-
+					// CASO 3 - NO INSERIDO EH FILHO DIREITO
+					if (isRightChild(pai) && avo.getFilho_esquerda() == null) {
 						caso3B_3CInsercao(no);
 					}
-					if(isRightChild(pai) && avo.getFilho_esquerda() != null && count == 0) {
-						System.out.println("6");
-
+					if(isRightChild(pai) && avo.getFilho_esquerda() != null) {
 						if(avo.getFilho_esquerda().isNegro() == true) {
-							System.out.println("7");
-
 							caso3B_3CInsercao(no);
 						}
-					}
-					
+					}	
 				}
 			}
 		}
-		root.setNegro(true);
-		root.setRubro(false);
+	root.setNegro(true);
+	root.setRubro(false);
 	}
 	
 	
@@ -419,7 +399,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	public void caso3A_3DInsercao(Node_binario no) {
 		Node_binario pai = no.getPai();
 		Node_binario avo = no.getPai().getPai();
-		// 3A - ROTA��O SIMPLES A DIREITA
+		// 3A - ROTACAO SIMPLES A DIREITA
 		if(isLeftChild(no)) {
 			pai.setNegro(true);
 			pai.setRubro(false);
@@ -428,7 +408,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			simplerotation_right(avo);
 			
 		} 
-		// 3D - ROTA��O DUPLA DIREITA
+		// 3D - ROTACAO DUPLA DIREITA
 		else if (isRightChild(no)) {
 			no.setNegro(true);
 			no.setRubro(false);
@@ -443,7 +423,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	public void caso3B_3CInsercao(Node_binario no) {
 		Node_binario pai = no.getPai();
 		Node_binario avo = no.getPai().getPai();
-		// 3B - ROTA��O SIMPLES A ESQUERDA
+		// 3B - ROTACAO SIMPLES A ESQUERDA
 		if(isRightChild(no)) {
 			pai.setNegro(true);
 			pai.setRubro(false);
@@ -451,7 +431,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			avo.setRubro(true);
 			simplerotation_left(avo);
 		} 
-		// 3C - ROTA��O DUPLA ESQUERDA
+		// 3C - ROTACAO DUPLA ESQUERDA
 		else if (isLeftChild(no)) {
 			no.setNegro(true);
 			no.setRubro(false);
