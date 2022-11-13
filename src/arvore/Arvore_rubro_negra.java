@@ -6,9 +6,6 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 		super();
 	}
 
-	
-	
-
 	public void insert(Object elemento) throws NodeException {
 		if (isEmpty()) {
 			root = new Node_binario(elemento);
@@ -29,7 +26,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				} else {
 					throw new NodeException("Não há mais espaço para repetição!!");
 				}
-				
+
 			} else if ((int) elemento < (int) aux.getElemento()) {
 				new_node.setPai(aux);
 				aux.setFilho_esquerda(new_node);
@@ -44,19 +41,15 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 
 	public void remove(Object elemento) throws NodeException {
 		Node_binario aux = find(elemento, root);
-		int cont = 0;
+		int count = 0;
 		if (elemento != aux.getElemento()) {
 			throw new NodeException("O Node com a chave " + elemento + " nao existe!");
 		} else {
-			
-			String no_removido = "";
+
 			Node_binario no_sucessor = null;
-			if(aux.isRubro() == true) {
-				no_removido = "RUBRO";
-			} else if(aux.isNegro() == true) {
-				no_removido = "NEGRO";
-			}
-			
+			Boolean noSucessorIsLeft = null;
+			String no_removido = (aux.isNegro() == true ? "NEGRO" : "RUBRO");
+
 			if (isExternal(aux)) {
 				if (isRoot(aux) == true) {
 					root = null;
@@ -74,34 +67,44 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					aux.getFilho_esquerda().setPai(null);
 					root = aux.getFilho_esquerda();
 					aux.setFilho_esquerda(null);
-					
+
 					// NO SUCESSOR
 					no_sucessor = root;
+					noSucessorIsLeft = isLeftChild(no_sucessor);
+					String sucessor = (no_sucessor.isNegro() == true ? "NEGRO" : "RUBRO");
+					fixRemove(no_removido, sucessor, no_sucessor,noSucessorIsLeft);
+
 				} else {
+					no_sucessor = aux.getFilho_esquerda();
+					noSucessorIsLeft = isLeftChild(no_sucessor);
+
 					if (aux == aux.getPai().getFilho_esquerda()) {
-						// NO SUCESSOR
-						no_sucessor = aux.getFilho_esquerda();
-						
+
 						aux.getPai().setFilho_esquerda(aux.getFilho_esquerda());
 						aux.getFilho_esquerda().setPai(aux.getPai());
-						
+
 					} else {
-						// NO SUCESSOR
-						no_sucessor = aux.getFilho_esquerda();
-						
+
 						aux.getPai().setFilho_direita(aux.getFilho_esquerda());
 						aux.getFilho_esquerda().setPai(aux.getPai());
 					}
+					
+					String sucessor = (no_sucessor.isNegro() == true ? "NEGRO" : "RUBRO");
+					fixRemove(no_removido, sucessor, no_sucessor,noSucessorIsLeft);
 				}
 			} else {
 				Node_binario aux2 = aux.getFilho_direita();
 				while (aux2.getFilho_esquerda() != null) {
 					aux2 = aux2.getFilho_esquerda();
-					cont++;
+					count++;
 				}
 				no_sucessor = aux2;
+				noSucessorIsLeft = isLeftChild(no_sucessor);
+				String sucessor = (no_sucessor.isNegro() == true ? "NEGRO" : "RUBRO");
 				aux.setElemento(aux2.getElemento());
-				if (cont > 0) {
+				aux.setNegro(aux2.isNegro());
+				aux.setRubro(aux2.isRubro());
+				if (count > 0) {
 					aux2.getPai().setFilho_esquerda(aux2.getFilho_direita());
 					if (aux2.getFilho_direita() != null) {
 						aux2.getFilho_direita().setPai(aux);
@@ -112,47 +115,58 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 						aux2.getFilho_direita().setPai(aux);
 					}
 				}
+				fixRemove(no_removido, sucessor, aux,noSucessorIsLeft);
 			}
-		fixRemove(no_removido, no_sucessor);
 		}
 
 		System.out.println("Chave " + elemento + " removida com sucesso!");
 	}
 
-	public void fixRemove(String v, Node_binario no_sucessor) {
-		String sucessor = (no_sucessor.isNegro() == true ? "NEGRO" : "RUBRO");
-		
-			// CASO 1 REMOCAO
-			if( v == "RUBRO" && sucessor == "RUBRO") {
-				// NADA PRECISA SER FEITO
-			}
-			
-			// CASO 2 REMOCAO
-			if( v == "NEGRO" && sucessor == "RUBRO") {
-				no_sucessor.setNegro(true);
-				no_sucessor.setRubro(false);
-			}
-			
-			// CASO 3 REMOCAO
-			if( v == "NEGRO" && sucessor == "NEGRO") {
-				caso3Remocao(no_sucessor);
-			}		
-			// CASO 4 REMOCAO
-			if( v == "RUBRO" && sucessor == "NEGRO") {
-				no_sucessor.setNegro(false);
-				no_sucessor.setRubro(true);
-				// DUVIDA PARA TIRAR COM COLEGUINHA!!!!!!
-			}	
-			
+	public void fixRemove(String v, String sucessor, Node_binario no_sucessor, Boolean isLeft) {
+
+		// CASO 1 REMOCAO
+		if (v == "RUBRO" && sucessor == "RUBRO") {
+			// NADA PRECISA SER FEITO
+		}
+
+		// CASO 2 REMOCAO
+		if (v == "NEGRO" && sucessor == "RUBRO") {
+			no_sucessor.setNegro(true);
+			no_sucessor.setRubro(false);
+		}
+
+		// CASO 3 REMOCAO
+		if (v == "NEGRO" && sucessor == "NEGRO") {
+			caso3Remocao(no_sucessor);
+		}
+		// CASO 4 REMOCAO
+		if (v == "RUBRO" && sucessor == "NEGRO") {
+			no_sucessor.setNegro(false);
+			no_sucessor.setRubro(true);
+			caso4Remocao(no_sucessor, isLeft);
+		}
+
 	}
 	
-	public void caso3Remocao(Node_binario no) {
-		if(no != root) {
-			Node_binario no_pai = no.getPai();
+	public void caso4Remocao(Node_binario no, Boolean isLeft) {
+		if (no == root) {
+			no.setNegro(true);
+			no.setRubro(false);
+		} else {
 			
+		}
+	}
+
+	public void caso3Remocao(Node_binario no) {
+		if (no == root) {
+			no.setNegro(true);
+			no.setRubro(false);
+		} else {
+			Node_binario no_pai = no.getPai();
+
 			// CASO 3_1 ESQUERDA
-			if(isLeftChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_direita() != null) {
-				if(no_pai.getFilho_direita().isRubro() == true) {
+			if (isLeftChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_direita() != null) {
+				if (no_pai.getFilho_direita().isRubro() == true) {
 					no_pai.getFilho_direita().setRubro(false);
 					no_pai.getFilho_direita().setNegro(true);
 					no_pai.setRubro(false);
@@ -161,8 +175,8 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_1 DIREITA
-			if(isRightChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_esquerda() != null) {
-				if(no_pai.getFilho_esquerda().isRubro() == true) {
+			if (isRightChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_esquerda() != null) {
+				if (no_pai.getFilho_esquerda().isRubro() == true) {
 					no_pai.getFilho_esquerda().setRubro(false);
 					no_pai.getFilho_esquerda().setNegro(true);
 					no_pai.setRubro(false);
@@ -171,11 +185,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_2A ESQUERDA
-			if(isLeftChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_direita() != null) {
+			if (isLeftChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_direita() != null) {
 				if (no_pai.getFilho_direita().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_direita();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
 							irmao.setRubro(true);
 							irmao.setNegro(false);
 						}
@@ -183,11 +197,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_2A DIREITA
-			if(isRightChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_esquerda() != null) {
+			if (isRightChild(no) == true && no_pai.isNegro() == true && no_pai.getFilho_esquerda() != null) {
 				if (no_pai.getFilho_esquerda().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_esquerda();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
 							irmao.setRubro(true);
 							irmao.setNegro(false);
 						}
@@ -195,11 +209,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_2B ESQUERDA
-			if(isLeftChild(no) == true && no_pai.isRubro() == true && no_pai.getFilho_direita() != null) {
+			if (isLeftChild(no) == true && no_pai.isRubro() == true && no_pai.getFilho_direita() != null) {
 				if (no_pai.getFilho_direita().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_direita();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
 							irmao.setRubro(true);
 							irmao.setNegro(false);
 							no_pai.setNegro(true);
@@ -209,11 +223,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_2B DIREITA
-			if(isRightChild(no) == true && no_pai.isRubro() == true && no_pai.getFilho_esquerda() != null) {
+			if (isRightChild(no) == true && no_pai.isRubro() == true && no_pai.getFilho_esquerda() != null) {
 				if (no_pai.getFilho_esquerda().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_esquerda();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isNegro() == true) {
 							irmao.setRubro(true);
 							irmao.setNegro(false);
 							no_pai.setNegro(true);
@@ -222,13 +236,13 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					}
 				}
 			}
-			
+
 			// CASO 3_3 ESQUERDA
-			if(isLeftChild(no) == true && no_pai.getFilho_direita() != null) {
+			if (isLeftChild(no) == true && no_pai.getFilho_direita() != null) {
 				if (no_pai.getFilho_direita().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_direita();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isRubro() == true && irmao.getFilho_direita().isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isRubro() == true && irmao.getFilho_direita().isNegro() == true) {
 							irmao.getFilho_esquerda().setNegro(true);
 							irmao.getFilho_esquerda().setRubro(false);
 							irmao.setNegro(false);
@@ -239,11 +253,11 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_3 DIREITA
-			if(isRightChild(no) == true && no_pai.getFilho_esquerda() != null) {
+			if (isRightChild(no) == true && no_pai.getFilho_esquerda() != null) {
 				if (no_pai.getFilho_esquerda().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_esquerda();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isRubro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isNegro() == true && irmao.getFilho_direita().isRubro() == true) {
 							irmao.getFilho_direita().setNegro(true);
 							irmao.getFilho_direita().setRubro(false);
 							irmao.setNegro(false);
@@ -254,12 +268,12 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_4 ESQUERDA
-			if(isLeftChild(no) == true && no_pai.getFilho_direita() != null) {
+			if (isLeftChild(no) == true && no_pai.getFilho_direita() != null) {
 				if (no_pai.getFilho_direita().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_direita();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_direita().isRubro() == true) {
-							if(no_pai.isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_direita().isRubro() == true) {
+							if (no_pai.isNegro() == true) {
 								irmao.setNegro(true);
 								irmao.setRubro(false);
 							} else {
@@ -276,12 +290,12 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 				}
 			}
 			// CASO 3_4 DIREITA
-			if(isRightChild(no) == true && no_pai.getFilho_esquerda() != null) {
+			if (isRightChild(no) == true && no_pai.getFilho_esquerda() != null) {
 				if (no_pai.getFilho_esquerda().isNegro() == true) {
 					Node_binario irmao = no_pai.getFilho_esquerda();
-					if(irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
-						if(irmao.getFilho_esquerda().isRubro() == true) {
-							if(no_pai.isNegro() == true) {
+					if (irmao.getFilho_esquerda() != null && irmao.getFilho_direita() != null) {
+						if (irmao.getFilho_esquerda().isRubro() == true) {
+							if (no_pai.isNegro() == true) {
 								irmao.setNegro(true);
 								irmao.setRubro(false);
 							} else {
@@ -296,12 +310,10 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 						}
 					}
 				}
-			}				
+			}
 		}
 	}
-	
-	
-	
+
 	public void fixInsert(Node_binario no) {
 		if (no == root) {
 			no.setNegro(true);
@@ -317,7 +329,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			}
 			if (pai.isRubro() == true && pai != root) {
 				if (avo.isNegro() == true) {
-					
+
 					// CASO 2 - NO INSERIDO EH FILHO ESQUERDO
 					if (isLeftChild(pai) && avo.getFilho_direita() != null) {
 						if (avo.getFilho_direita().isRubro() == true) {
@@ -327,7 +339,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 									fixInsert(avo);
 								}
 							}
-						return;
+							return;
 						}
 					}
 					// CASO 2 - NO INSERIDO EH FILHO DIREITO
@@ -340,74 +352,73 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 									fixInsert(avo);
 								}
 							}
-						return;
+							return;
 						}
 					}
-					
+
 					// CASO 3 - NO INSERIDO EH FILHO ESQUERDO
-					if (isLeftChild(pai) && avo.getFilho_direita() == null){
+					if (isLeftChild(pai) && avo.getFilho_direita() == null) {
 						caso3A_3DInsercao(no);
 					}
-					if(isLeftChild(pai) && avo.getFilho_direita() != null) {
-						if(avo.getFilho_direita().isNegro() == true){
+					if (isLeftChild(pai) && avo.getFilho_direita() != null) {
+						if (avo.getFilho_direita().isNegro() == true) {
 							caso3A_3DInsercao(no);
 						}
 					}
-					
+
 					// CASO 3 - NO INSERIDO EH FILHO DIREITO
 					if (isRightChild(pai) && avo.getFilho_esquerda() == null) {
 						caso3B_3CInsercao(no);
 					}
-					if(isRightChild(pai) && avo.getFilho_esquerda() != null) {
-						if(avo.getFilho_esquerda().isNegro() == true) {
+					if (isRightChild(pai) && avo.getFilho_esquerda() != null) {
+						if (avo.getFilho_esquerda().isNegro() == true) {
 							caso3B_3CInsercao(no);
 						}
-					}	
+					}
 				}
 			}
 		}
-	root.setNegro(true);
-	root.setRubro(false);
+		root.setNegro(true);
+		root.setRubro(false);
 	}
-	
-	
+
 	public void caso2Insercao(Node_binario no, boolean leftchild) {
 		Node_binario pai = no.getPai();
 		Node_binario avo = no.getPai().getPai();
 		if (leftchild == true) {
 			pai.setNegro(true);
 			pai.setRubro(false);
-			
+
 			avo.setNegro(false);
 			avo.setRubro(true);
-			
+
 			avo.getFilho_direita().setNegro(true);
 			avo.getFilho_direita().setRubro(false);
 
 		} else {
 			pai.setNegro(true);
 			pai.setRubro(false);
-			
+
 			avo.setNegro(false);
 			avo.setRubro(true);
-			
+
 			avo.getFilho_esquerda().setNegro(true);
 			avo.getFilho_esquerda().setRubro(false);
 		}
 	}
-	
+
 	public void caso3A_3DInsercao(Node_binario no) {
 		Node_binario pai = no.getPai();
 		Node_binario avo = no.getPai().getPai();
 		// 3A - ROTACAO SIMPLES A DIREITA
-		if(isLeftChild(no)) {
+		if (isLeftChild(no)) {
 			pai.setNegro(true);
 			pai.setRubro(false);
 			avo.setNegro(false);
 			avo.setRubro(true);
 			simplerotation_right(avo);
-			
-		} 
+
+		}
 		// 3D - ROTACAO DUPLA DIREITA
 		else if (isRightChild(no)) {
 			no.setNegro(true);
@@ -416,21 +427,21 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			avo.setRubro(true);
 			simplerotation_left(pai);
 			simplerotation_right(avo);
-			
+
 		}
 	}
-	
+
 	public void caso3B_3CInsercao(Node_binario no) {
 		Node_binario pai = no.getPai();
 		Node_binario avo = no.getPai().getPai();
 		// 3B - ROTACAO SIMPLES A ESQUERDA
-		if(isRightChild(no)) {
+		if (isRightChild(no)) {
 			pai.setNegro(true);
 			pai.setRubro(false);
 			avo.setNegro(false);
 			avo.setRubro(true);
 			simplerotation_left(avo);
-		} 
+		}
 		// 3C - ROTACAO DUPLA ESQUERDA
 		else if (isLeftChild(no)) {
 			no.setNegro(true);
@@ -440,11 +451,9 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			simplerotation_right(pai);
 			simplerotation_left(avo);
 		}
-		
+
 	}
 
-	
-	
 	public void simplerotation_left(Node_binario no) {
 		Node_binario novo_no = no.getFilho_direita();
 		if (hasLeft(novo_no)) {
@@ -537,7 +546,7 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 			for (int j = 0; j <= height(); j++) {
 				for (int i = 0; i < size(); i++) {
 					if (depth(nos.get(i)) == j) {
-						if(nos.get(i).isRubro() == true) {
+						if (nos.get(i).isRubro() == true) {
 							System.err.print("\t" + nos.get(i).getElemento());
 						} else {
 							System.out.print("\t" + nos.get(i).getElemento());
