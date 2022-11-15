@@ -12,9 +12,9 @@ public class Arvore_rubro_negra_teste {
 		}
 		arv.mostraArvore();
 		
-		arv.remove(7);
-
-		arv.mostraArvore();
+//		arv.remove(7);
+//
+//		arv.mostraArvore();
 
 }
 }
