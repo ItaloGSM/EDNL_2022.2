@@ -7,7 +7,7 @@ public class Arvore_rubro_negra_teste {
 		Arvore_rubro_negra arv = new Arvore_rubro_negra();
 		
 		
-		for(int i=0; i<20;i++) {
+		for(int i=1; i<=11;i++) {
 			arv.insert(i);
 		}
 		arv.mostraArvore();

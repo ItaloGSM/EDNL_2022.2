@@ -481,6 +481,8 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 									fixInsert(avo);
 								}
 							}
+							root.setNegro(true);
+							root.setRubro(false);
 							return;
 						}
 					}
@@ -494,6 +496,8 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 									fixInsert(avo);
 								}
 							}
+							root.setNegro(true);
+							root.setRubro(false);
 							return;
 						}
 					}
@@ -679,19 +683,20 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	}
 
 	public void mostraArvore() {
+		final String ANSI_RED = "\u001B[31m";
+		final String ANSI_RESET = "\u001B[0m";
 		if (root == null) {
 			System.out.println("ARVORE VAZIA!");
 		} else {
 			organizador(root);
 			System.out.println("ARVORE RUBRO NEGRA:");
-			System.out.println();
 			for (int j = 0; j <= height(); j++) {
 				for (int i = 0; i < size(); i++) {
 					if (depth(nos.get(i)) == j) {
 						if (nos.get(i).isRubro() == true) {
-							System.err.print("\t" + nos.get(i).getElemento());
+							System.out.print("\t" + nos.get(i).getElemento() + "[R]");
 						} else {
-							System.out.print("\t" + nos.get(i).getElemento());
+							System.out.print("\t" + nos.get(i).getElemento() + "[N]");
 						}
 					} else {
 						System.out.print("\t");

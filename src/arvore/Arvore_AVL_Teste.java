@@ -7,11 +7,10 @@ public class Arvore_AVL_Teste {
 		
 		
 		
-		for (int i=1;i<=10;i++) {
+		for (int i=1;i<=9;i++) {
 			arv.insert(i);
 		}
-		arv.remove(1);
-		arv.remove(3);
+
 		
 		System.out.println("FATOR DE BALANCEAMENTO: " + arv.getRoot().getFb());
 		arv.mostraArvore();
