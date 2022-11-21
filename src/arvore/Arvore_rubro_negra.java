@@ -158,7 +158,12 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	
 	
 	public void fixRemove(String cor_removido, String cor_sucessor, Node_binario no_pai, Node_binario no_sucessor ,Boolean isLeft) {
-
+		System.out.println("cor removido:" + cor_removido);
+		System.out.println("cor sucessor:" + cor_sucessor);
+		System.out.println("no_pai:" + no_pai);
+		System.out.println("no_sucessor" + no_sucessor);
+		System.out.println("isleft:" + isLeft);
+		
 		// CASO 1 REMOCAO
 		if (cor_removido == "RUBRO" && cor_sucessor == "RUBRO") {
 			// NADA PRECISA SER FEITO
@@ -182,7 +187,6 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 		}
 		
 		if (cor_removido == "NEGRO" && cor_sucessor == null) {
-			// EXTERNO NEGRO SEM SUCESSOR - ANALISAR ESSE CASO
 			caso3Remocao(no_pai,isLeft);
 		}
 			
@@ -453,6 +457,9 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 					}
 				}
 			}
+			if(no.getPai() != root) {
+				caso3Remocao(no.getPai(), isLeftChild(no.getPai()));
+			}
 		}
 	}
 
@@ -683,8 +690,6 @@ public class Arvore_rubro_negra extends Arvore_binaria_de_pesquisa {
 	}
 
 	public void mostraArvore() {
-		final String ANSI_RED = "\u001B[31m";
-		final String ANSI_RESET = "\u001B[0m";
 		if (root == null) {
 			System.out.println("ARVORE VAZIA!");
 		} else {
