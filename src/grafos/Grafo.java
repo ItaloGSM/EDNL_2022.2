@@ -149,6 +149,8 @@ public class Grafo {
 	public Aresta inserirAresta(Vertice verticeOrigem, Vertice verticeDestino, int peso) {
 		Aresta arestaAux = new Aresta(verticeOrigem, verticeDestino, peso);
 		arestas.add(arestaAux);
+		verticeOrigem.adicionarAresta(arestaAux);
+		verticeDestino.adicionarAresta(arestaAux);
 		return arestaAux;
 	}
 	
@@ -171,14 +173,15 @@ public class Grafo {
 	}
 	
 	public void matrizDeIncidencia() {
+		System.out.println(vertices.size() + " - " + arestas.size());
 		System.out.print("  |");
-		for (int j=0; j<=arestas.size();j++) {
+		for (int j=0; j<arestas.size();j++) {
 			System.out.print("C"+j+"|");
 		}
-		
-		for (int i=0; i<=vertices.size();i++) {
-			System.out.print("V1|");
-			for (int j=0; j<=arestas.size();j++) {
+		System.out.println();
+		for (int i=0; i<vertices.size();i++) {
+			System.out.print("V"+i+"|");
+			for (int j=0; j<arestas.size();j++) {
 				if(vertices.get(i) == arestas.get(j).getOrigem()) {
 					System.out.print("-1|");
 				} else if(vertices.get(i) == arestas.get(j).getDestino()) {
@@ -187,7 +190,7 @@ public class Grafo {
 					System.out.print("0|");
 				}
 			}
-			vertices.get(i);
+			System.out.println();
 		}
 	}
 	

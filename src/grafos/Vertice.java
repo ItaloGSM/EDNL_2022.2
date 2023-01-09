@@ -26,4 +26,8 @@ public class Vertice {
 	public void setAdjacencias(List<Aresta> adjacencias) {
 		this.adjacencias = adjacencias;
 	}
+	
+	public void adicionarAresta(Aresta aresta) {
+		adjacencias.add(aresta);
+	}
 }
