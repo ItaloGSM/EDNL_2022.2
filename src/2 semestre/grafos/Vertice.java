@@ -6,8 +6,11 @@ import java.util.List;
 public class Vertice {
 	  private int valor;
 	  private List<Aresta> adjacencias = new ArrayList<Aresta>();
+	  private List<Vertice> verticesAdjacentes = new ArrayList<Vertice>();
 
-	  public Vertice(int valor) {
+
+
+	public Vertice(int valor) {
 	    this.valor = valor;
 	  }
 
@@ -29,5 +32,13 @@ public class Vertice {
 	
 	public void adicionarAresta(Aresta aresta) {
 		adjacencias.add(aresta);
+	}
+	
+	public List<Vertice> getVerticesAdjacentes() {
+		return verticesAdjacentes;
+	}
+
+	public void setVerticesAdjacentes(List<Vertice> verticesAdjacentes) {
+		this.verticesAdjacentes = verticesAdjacentes;
 	}
 }
