@@ -16,6 +16,7 @@ public class GrafoTeste {
 		g1.inserirAresta(v2,v0,15);
 		
 		g1.matrizDeIncidencia();
+		g1.matrizDeAdjacencia();;
 		
 	}
 }

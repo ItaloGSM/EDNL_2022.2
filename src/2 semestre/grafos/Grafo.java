@@ -73,6 +73,18 @@ public class Grafo {
 				verticeDestino.getAdjacencias().remove(i);
 			}
 		}
+		
+		for (int i = 0; i <= verticeDestino.getVerticesAdjacentes().size(); i++) {
+			if (verticeOrigem == verticeDestino.getVerticesAdjacentes().get(i)) {
+				verticeDestino.getVerticesAdjacentes().remove(i);
+			}
+		}
+		
+		for (int i = 0; i <= verticeOrigem.getVerticesAdjacentes().size(); i++) {
+			if (verticeDestino == verticeOrigem.getVerticesAdjacentes().get(i)) {
+				verticeOrigem.getVerticesAdjacentes().remove(i);
+			}
+		}
 
 	}
 
@@ -151,6 +163,8 @@ public class Grafo {
 		arestas.add(arestaAux);
 		verticeOrigem.adicionarAresta(arestaAux);
 		verticeDestino.adicionarAresta(arestaAux);
+		verticeOrigem.getVerticesAdjacentes().add(verticeDestino);
+		verticeDestino.getVerticesAdjacentes().add(verticeOrigem);
 		return arestaAux;
 	}
 	
@@ -173,7 +187,6 @@ public class Grafo {
 	}
 	
 	public void matrizDeIncidencia() {
-		System.out.println(vertices.size() + " - " + arestas.size());
 		System.out.print("  |");
 		for (int j=0; j<arestas.size();j++) {
 			System.out.print("C"+j+"|");
@@ -192,6 +205,34 @@ public class Grafo {
 			}
 			System.out.println();
 		}
+	}
+	
+	public void matrizDeAdjacencia() {
+		System.out.println(vertices.size());
+		System.out.print("  |");
+		for (int k=0; k<vertices.size();k++) {
+			System.out.print("V"+k+"|");
+		}
+		System.out.println();
+		for (int k=0; k<vertices.size();k++) {
+			System.out.print("V"+k+"|");
+
+			for (int i=0; i<vertices.size();i++) {
+				for (int j=0; j<vertices.get(k).getVerticesAdjacentes().size();j++) {
+					if(vertices.get(i) == vertices.get(i).getVerticesAdjacentes().get(j)) {
+						System.out.print("+1|");
+					} else {
+						System.out.print("0|");
+					}
+				}
+			}
+			
+			System.out.println();
+			
+			
+		}
+		
+
 	}
 	
 	
